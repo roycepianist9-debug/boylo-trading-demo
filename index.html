@@ -129,7 +129,7 @@
     <div id="clientView">
       <section id="top" class="px-4 sm:px-6 pt-12 sm:pt-16 pb-10">
         <div class="mx-auto max-w-page grid lg:grid-cols-12 gap-10">
-          <div class="lg:col-span-5 flex flex-col justify-center">
+          <div class="lg:col-span-6 flex flex-col justify-center">
             <h1 class="font-display font-semibold text-[1.75rem] sm:text-4xl lg:text-[2.75rem] leading-[1.15] tracking-tight" data-i18n="heroTitle">Votre véhicule importé de Corée ou loué sur la VDN en 2 clics</h1>
             <p class="mt-4 text-mute text-base sm:text-lg max-w-xl leading-relaxed" data-i18n="heroSub">Stock Corée visible par statut. Location au 7 VDN, Ouest Foire, jour et nuit.</p>
             <div class="mt-8 flex flex-wrap gap-3">
@@ -137,8 +137,18 @@
               <a href="#rental" class="focus-ring btn-touch inline-flex items-center justify-center px-5 rounded-sm hair font-semibold text-sm hover:bg-white/[0.04] transition" data-i18n="ctaRent">Louer sur la VDN</a>
             </div>
           </div>
-          <div class="lg:col-span-7">
-            <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+          <div class="lg:col-span-6">
+            <div class="bg-surface hair rounded-md p-5 sm:p-7">
+              <h2 class="font-display font-semibold text-lg" data-i18n="calcTitle">Prix clé en main Dakar</h2>
+              <label class="block text-xs text-mute mt-5 mb-1" for="tier" data-i18n="calcTier">Catégorie du véhicule</label>
+              <select id="tier" class="focus-ring w-full bg-elevated hair rounded-sm px-3 h-11 text-sm mb-6"></select>
+              <p id="calcLanded" class="font-display font-semibold font-mono tabular text-3xl sm:text-4xl tracking-tight leading-none"></p>
+              <p id="calcDeposit" class="mt-3 text-sm text-mute"></p>
+              <a id="calcWa" href="#" target="_blank" rel="noopener noreferrer" class="focus-ring btn-touch mt-6 inline-flex items-center justify-center gap-2 w-full px-5 rounded-sm text-sm font-semibold text-white" style="background:#25D366">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span data-i18n="waGreen">WhatsApp</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -447,7 +457,7 @@
 <script>
 /* ========================================================================
    Sample / placeholder data for this mock-up only. Not shown in the UI:
-   inventory, VINs, prices (priceXof = clé en main Dakar), rental rates,
+   inventory, VINs, prices (priceXof = clé en main Dakar), hero tier prices,
    booked ranges, zone fees, tracking refs, request list, FR/KR messages,
    and the WhatsApp number (e164 221000000000 / display +221 XX XXX XX XX).
    Payments are non-functional; the success modal only says "Demande envoyée".
@@ -470,7 +480,13 @@ const CARS = [
 ];
 /* priceXof is the displayed clé-en-main Dakar price. */
 
-const FEATURED_IDS = ["BY-SPO-20-044", "BY-TUC-18-041", "BY-SFE-17-118"];
+/* Hero prices are all-in clé en main Dakar (sample). Acompte line is 30% of that figure. */
+const TIERS = [
+  { id: "city", priceXof: 7872000 },
+  { id: "suvc", priceXof: 13776000 },
+  { id: "suvl", priceXof: 17712000 },
+  { id: "util", priceXof: 10824000 }
+];
 const SIM_MODELS = ["Tucson", "Sportage", "Santa Fe", "Sorento", "Porter II", "Avante", "K5"];
 const ZONE_FEES = { dakar: 0, aibd: 15000, regions: 40000 };
 const STORAGE_KEY = "boylo-demo-listings";
@@ -512,6 +528,13 @@ const I18N = {
     heroTitle: "Votre véhicule importé de Corée ou loué sur la VDN en 2 clics",
     heroSub: "Stock Corée visible par statut. Location au 7 VDN, Ouest Foire, jour et nuit.",
     featPrice: "Clé en main Dakar",
+    calcTitle: "Prix clé en main Dakar",
+    calcTier: "Catégorie du véhicule",
+    calcDeposit: "Acompte 30 % : {n}",
+    tierCity: "Citadine (Avante, K5)",
+    tierSuvc: "SUV compact (Tucson, Sportage)",
+    tierSuvl: "SUV (Santa Fe, Sorento)",
+    tierUtil: "Utilitaire (Porter II)",
     stockTitle: "Stock Corée", search: "Recherche", searchPh: "Tucson, Porter II…",
     budgetLabel: "Budget max (CFA)", budgetAll: "Tous les budgets",
     budget1: "15 000 000", budget2: "20 000 000", budget3: "25 000 000", budget4: "30 000 000",
@@ -571,6 +594,13 @@ const I18N = {
     heroTitle: "Your vehicle imported from Korea or rented on the VDN in 2 taps",
     heroSub: "Korea stock by status. Rentals at 7 VDN, Ouest Foire, day and night.",
     featPrice: "Turn-key Dakar",
+    calcTitle: "Turn-key price Dakar",
+    calcTier: "Vehicle type",
+    calcDeposit: "30% deposit: {n}",
+    tierCity: "City car (Avante, K5)",
+    tierSuvc: "Compact SUV (Tucson, Sportage)",
+    tierSuvl: "SUV (Santa Fe, Sorento)",
+    tierUtil: "Utility (Porter II)",
     stockTitle: "Korea stock", search: "Search", searchPh: "Tucson, Porter II…",
     budgetLabel: "Max budget (CFA)", budgetAll: "All budgets",
     budget1: "15,000,000", budget2: "20,000,000", budget3: "25,000,000", budget4: "30,000,000",
@@ -630,6 +660,13 @@ const I18N = {
     heroTitle: "한국에서 수입하거나 VDN에서 렌트, 두 번이면 됩니다",
     heroSub: "상태별로 보는 한국 재고. 다카르 7 VDN, Ouest Foire에서 주야간 렌탈.",
     featPrice: "다카르 인도 가격",
+    calcTitle: "다카르 인도 가격",
+    calcTier: "차량 유형",
+    calcDeposit: "계약금 30%: {n}",
+    tierCity: "소형/세단 (아반떼, K5)",
+    tierSuvc: "컴팩트 SUV (투싼, 스포티지)",
+    tierSuvl: "SUV (싼타페, 쏘렌토)",
+    tierUtil: "화물 (포터 II)",
     stockTitle: "한국 재고", search: "검색", searchPh: "Tucson, Porter II…",
     budgetLabel: "최대 예산 (CFA)", budgetAll: "모든 예산",
     budget1: "15,000,000", budget2: "20,000,000", budget3: "25,000,000", budget4: "30,000,000",
@@ -805,7 +842,8 @@ function applyI18n() {
   }
   fillSimModels();
   if (stockReady) renderStock(false);
-  renderFeatured();
+  fillTiers();
+  updateCalc();
   renderRentals();
   renderAdmin();
   updateWaLauncher();
@@ -832,12 +870,38 @@ function renderSkeletons() {
   const grid = document.getElementById("stockGrid");
   grid.innerHTML = Array.from({ length: 6 }, () => '<article class="bg-surface hair rounded-md p-4 h-64"><div class="skel h-16 rounded-sm mb-4"></div><div class="skel h-4 w-2/3 rounded-sm mb-2"></div><div class="skel h-4 w-1/3 rounded-sm"></div></article>').join("");
 }
-function renderFeatured() {
-  const grid = document.getElementById("featuredGrid");
-  if (!grid) return;
-  const list = FEATURED_IDS.map((id) => allCars().find((c) => c.id === id)).filter(Boolean);
-  grid.innerHTML = list.map((c) => carCard(c, true)).join("");
-  icons();
+function tierLabel(id) {
+  return t("tier" + ({ city: "City", suvc: "Suvc", suvl: "Suvl", util: "Util" }[id] || "Suvc"));
+}
+function fillTiers() {
+  const sel = document.getElementById("tier");
+  if (!sel) return;
+  const cur = sel.value || "suvc";
+  sel.innerHTML = TIERS.map((tr) => '<option value="' + tr.id + '">' + tierLabel(tr.id) + "</option>").join("");
+  sel.value = cur;
+}
+function currentTier() {
+  const id = (document.getElementById("tier") && document.getElementById("tier").value) || "suvc";
+  return TIERS.find((x) => x.id === id) || TIERS[1];
+}
+function updateCalc() {
+  const landedEl = document.getElementById("calcLanded");
+  const depEl = document.getElementById("calcDeposit");
+  const wa = document.getElementById("calcWa");
+  if (!landedEl || !depEl || !wa) return;
+  const tier = currentTier();
+  const landed = tier.priceXof;
+  const dep = Math.round(landed * 0.30);
+  landedEl.textContent = money(landed);
+  depEl.textContent = t("calcDeposit").replace("{n}", money(dep));
+  const label = tierLabel(tier.id);
+  const price = fcfaPlain(landed);
+  const msg = lang === "ko"
+    ? "안녕하세요 Boylo Trading, " + label + " 차량의 다카르 인도 가격 " + price + "에 관심이 있습니다. 아직 가능한지요?"
+    : lang === "en"
+    ? "Hello Boylo Trading, I am interested in a " + label + " at " + price + " turn-key Dakar. Is it still available?"
+    : "Bonjour Boylo Trading, je suis intéressé par un " + label + " à " + price + " clé en main Dakar. Est-il toujours disponible ?";
+  wa.href = waLink(msg);
 }
 function renderStock(withSkeleton) {
   const grid = document.getElementById("stockGrid");
@@ -1002,7 +1066,6 @@ function publishListing(e) {
   img.removeAttribute("src");
   showToast(t("qaOk"));
   renderStock(false);
-  renderFeatured();
 }
 function setMode(next) {
   view = next;
@@ -1106,6 +1169,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("menuClose").addEventListener("click", closeMenu);
   document.getElementById("backdrop").addEventListener("click", closeMenu);
   document.querySelectorAll(".drawer-link").forEach((a) => a.addEventListener("click", closeMenu));
+  document.getElementById("tier").addEventListener("change", updateCalc);
   document.getElementById("search").addEventListener("input", () => renderStock(false));
   document.getElementById("budget").addEventListener("change", (e) => { budgetMax = Number(e.target.value) || 0; renderStock(false); });
   document.querySelectorAll(".status-tab").forEach((b) => b.addEventListener("click", () => { statusFilter = b.getAttribute("data-status"); renderStock(false); }));
