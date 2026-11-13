@@ -98,8 +98,8 @@
       <nav class="hidden md:flex flex-1 items-center justify-center gap-1" aria-label="Primary">
         <a href="#import" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="navImport">Import Corée</a>
         <a href="#rental" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="navRental">Location VDN 24/7</a>
-        <a href="#suivi" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="navTrack">Suivi Conteneur</a>
-        <a href="#simulateur" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="simNav">Simulateur</a>
+        <a href="#suivi" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="navTrack">Suivi véhicule</a>
+        <a href="#simulateur" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="simNav">Simulateur de commande</a>
       </nav>
 
       <div class="hidden md:flex items-center gap-2 ml-auto">
@@ -129,8 +129,8 @@
     <nav class="flex flex-col gap-1" aria-label="Mobile">
       <a href="#import" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="navImport">Import Corée</a>
       <a href="#rental" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="navRental">Location VDN 24/7</a>
-      <a href="#suivi" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="navTrack">Suivi Conteneur</a>
-      <a href="#simulateur" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="simNav">Simulateur</a>
+      <a href="#suivi" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="navTrack">Suivi véhicule</a>
+      <a href="#simulateur" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="simNav">Simulateur de commande</a>
     </nav>
     <div class="flex hair rounded-sm overflow-hidden self-start" role="group">
       <button type="button" class="lang-btn focus-ring btn-touch px-3 text-xs font-medium" data-set-lang="fr">FR</button>
@@ -144,6 +144,10 @@
   <main id="main">
     <div id="clientView">
       <section id="top" class="px-4 sm:px-6 pt-12 sm:pt-16 pb-10">
+        <div class="mx-auto max-w-page mb-8 lg:mb-10">
+          <p class="text-sm font-semibold tracking-wide text-accent" data-i18n="introHero">Connaissez votre coût</p>
+          <p class="text-mute text-sm mt-1 max-w-2xl" data-i18n="introHeroLine">Voyez le prix clé en main et l'acompte, pour un véhicule livré à Dakar.</p>
+        </div>
         <div class="mx-auto max-w-page grid lg:grid-cols-12 gap-10">
           <div class="lg:col-span-6 flex flex-col justify-center">
             <h1 class="font-display font-semibold text-[1.75rem] sm:text-4xl lg:text-[2.75rem] leading-[1.15] tracking-tight" data-i18n="heroTitle">Votre véhicule importé de Corée ou loué sur la VDN en 2 clics</h1>
@@ -155,14 +159,14 @@
           </div>
           <div class="lg:col-span-6">
             <div class="bg-surface hair rounded-md p-5 sm:p-6">
-              <h2 class="font-display font-semibold text-lg mb-5" data-i18n="calcTitle">Coût rendu &amp; acompte</h2>
+              <h2 class="font-display font-semibold text-lg leading-snug mb-5" data-i18n="calcTitle">Combien ça coûte, livré à Dakar ?</h2>
               <label class="block text-xs text-mute mb-1" for="tier" data-i18n="calcTier">Catégorie du véhicule</label>
               <select id="tier" class="focus-ring w-full bg-elevated hair rounded-sm px-3 h-11 text-sm mb-4"></select>
               <div class="space-y-3 text-sm">
-                <div class="flex justify-between gap-4"><span class="text-mute" data-i18n="calcCif">CIF Dakar</span><span id="calcCif" class="font-mono tabular"></span></div>
-                <div class="flex justify-between gap-4"><span class="text-mute" data-i18n="calcCustoms">Douane</span><span id="calcCustoms" class="font-mono tabular"></span></div>
-                <div class="flex justify-between gap-4 border-t border-white/[0.08] pt-3"><span data-i18n="calcLanded">Coût rendu estimé</span><span id="calcLanded" class="font-mono tabular font-medium"></span></div>
-                <div class="flex justify-between gap-4 text-avail"><span data-i18n="calcDeposit">Acompte 30 %</span><span id="calcDeposit" class="font-mono tabular font-medium"></span></div>
+                <div class="flex justify-between items-start gap-4"><span class="text-mute pr-3" data-i18n="calcCif">Prix du véhicule livré à Dakar</span><span id="calcCif" class="font-mono tabular shrink-0 text-right"></span></div>
+                <div class="flex justify-between items-start gap-4"><span class="text-mute pr-3" data-i18n="calcCustoms">Douane</span><span id="calcCustoms" class="font-mono tabular shrink-0 text-right"></span></div>
+                <div class="flex justify-between items-start gap-4 border-t border-white/[0.08] pt-3"><span class="pr-3" data-i18n="calcLanded">Total clé en main</span><span id="calcLanded" class="font-mono tabular font-medium shrink-0 text-right"></span></div>
+                <div class="flex justify-between items-start gap-4 text-avail"><span class="pr-3" data-i18n="calcDeposit">Acompte 30 %</span><span id="calcDeposit" class="font-mono tabular font-medium shrink-0 text-right"></span></div>
               </div>
             </div>
           </div>
@@ -171,7 +175,9 @@
 
       <section id="import" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
         <div class="mx-auto max-w-page">
-          <h2 class="font-display font-semibold text-2xl sm:text-3xl mb-6" data-i18n="stockTitle">Stock Corée</h2>
+          <p class="text-sm font-semibold tracking-wide text-accent" data-i18n="introStock">Choisissez votre véhicule</p>
+          <h2 class="font-display font-semibold text-2xl sm:text-3xl mt-1" data-i18n="stockTitle">Stock Corée</h2>
+          <p class="text-mute text-sm mt-2 mb-6 max-w-2xl" data-i18n="introStockLine">Parcourez le stock par modèle et par statut.</p>
 
           <div class="flex flex-wrap gap-2 mb-4" role="tablist" aria-label="Status">
             <button type="button" class="status-tab focus-ring btn-touch px-3 rounded-sm text-sm hair" data-status="all" data-i18n="filterAll">Tous</button>
@@ -207,12 +213,15 @@
           </div>
 
           <div class="flex flex-wrap gap-2 mb-6" role="group" aria-label="Price mode">
-            <button type="button" id="priceCle" class="price-mode focus-ring btn-touch px-3 rounded-sm text-sm hair" data-mode="cle" data-i18n="priceCle">Dédouané / Clé en main Dakar</button>
+            <button type="button" id="priceCle" class="price-mode focus-ring btn-touch px-3 rounded-sm text-sm hair" data-mode="cle" data-i18n="priceCle">Clé en main Dakar</button>
             <button type="button" id="pricePort" class="price-mode focus-ring btn-touch px-3 rounded-sm text-sm hair" data-mode="port" data-i18n="pricePort">Prix port / Hors douane</button>
           </div>
           <div id="stockCarousels" class="space-y-8 mb-10"></div>
           <p id="stockCount" class="text-sm text-mute mb-4"></p>
           <div id="stockGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+          <div id="stockMoreWrap" class="hidden mt-6">
+            <button type="button" id="stockMore" class="focus-ring btn-touch inline-flex items-center px-5 rounded-sm hair font-semibold text-sm hover:bg-white/[0.04] transition" data-i18n="voirPlus">Voir plus</button>
+          </div>
           <div id="stockEmpty" class="hidden text-center py-16 hair rounded-md bg-surface">
             <p class="font-display font-semibold" data-i18n="emptyTitle">Aucune voiture ne correspond</p>
             <p class="text-sm text-mute mt-2" data-i18n="emptyText">Élargissez la recherche ou réinitialisez les filtres.</p>
@@ -223,7 +232,8 @@
 
       <section id="simulateur" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
         <div class="mx-auto max-w-page">
-          <h2 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="simTitle">Simulateur Commande Corée</h2>
+          <p class="text-sm font-semibold tracking-wide text-accent" data-i18n="introSim">Commandez en Corée</p>
+          <h2 class="font-display font-semibold text-2xl sm:text-3xl mt-1" data-i18n="simTitle">Simulateur de commande en Corée</h2>
           <p class="text-mute text-sm max-w-2xl mt-2 mb-6" data-i18n="simLead">Indiquez le modèle, les années et votre budget.</p>
           <div class="bg-surface hair rounded-md p-5 sm:p-6 max-w-2xl">
             <ol class="flex flex-wrap gap-4 text-sm mb-6" id="simSteps">
@@ -264,8 +274,9 @@
 
       <section id="rental" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
         <div class="mx-auto max-w-page">
-          <h2 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="rentalTitle">Location VDN 24/7</h2>
-          <p class="text-mute text-sm max-w-2xl mt-2 mb-6" data-i18n="rentalLead">Bureau au 7 VDN, Ouest Foire, Dakar (PGWJ+382). Ouvert jour et nuit.</p>
+          <p class="text-sm font-semibold tracking-wide text-accent" data-i18n="introRent">Louez une voiture</p>
+          <h2 class="font-display font-semibold text-2xl sm:text-3xl mt-1" data-i18n="rentalTitle">Location VDN 24/7</h2>
+          <p class="text-mute text-sm max-w-2xl mt-2 mb-6" data-i18n="rentalLead">Choisissez vos dates et réservez au 7 VDN, jour et nuit.</p>
           <div class="bg-surface hair rounded-md p-4 sm:p-5 mb-6">
             <p class="text-sm font-medium mb-3" data-i18n="rentDates">Dates et zone</p>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -291,28 +302,25 @@
 
       <section id="suivi" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
         <div class="mx-auto max-w-page">
-          <h2 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="trackTitle">Suivi conteneur</h2>
-          <p class="text-mute text-sm max-w-2xl mt-2 mb-8" data-i18n="trackLead">Suivez votre dossier de Incheon au Port de Dakar.</p>
+          <p class="text-sm font-semibold tracking-wide text-accent" data-i18n="introTrack">Suivez votre véhicule</p>
+          <h2 class="font-display font-semibold text-2xl sm:text-3xl mt-1" data-i18n="trackTitle">Suivi de votre véhicule</h2>
+          <p class="text-mute text-sm max-w-2xl mt-2 mb-8" data-i18n="trackLead">Entrez votre référence pour voir où en est votre véhicule.</p>
           <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
             <li class="bg-surface hair rounded-md p-4">
               <span class="font-mono text-xs text-mute">01</span>
-              <p class="font-display font-semibold mt-2">Incheon</p>
-              <p class="text-sm text-mute mt-1" data-i18n="cIncheon">Préparation et stock Corée</p>
+              <p class="font-display font-semibold mt-2" data-i18n="cStep1">Achat en Corée</p>
             </li>
             <li class="bg-surface hair rounded-md p-4">
               <span class="font-mono text-xs text-mute">02</span>
-              <p class="font-display font-semibold mt-2">Busan</p>
-              <p class="text-sm text-mute mt-1" data-i18n="cBusan">Chargement RoRo</p>
+              <p class="font-display font-semibold mt-2" data-i18n="cStep2">Expédition</p>
             </li>
             <li class="bg-surface hair rounded-md p-4">
               <span class="font-mono text-xs text-mute">03</span>
-              <p class="font-display font-semibold mt-2">Tanger Med</p>
-              <p class="text-sm text-mute mt-1" data-i18n="cTanger">Escale</p>
+              <p class="font-display font-semibold mt-2" data-i18n="cStep3">Arrivée au port de Dakar</p>
             </li>
             <li class="bg-surface hair rounded-md p-4">
               <span class="font-mono text-xs text-mute">04</span>
-              <p class="font-display font-semibold mt-2">Port Autonome de Dakar</p>
-              <p class="text-sm text-mute mt-1" data-i18n="cDakar">Arrivée et douane</p>
+              <p class="font-display font-semibold mt-2" data-i18n="cStep4">Remise des clés</p>
             </li>
           </ol>
           <form id="trackForm" class="bg-surface hair rounded-md p-5 sm:p-6 max-w-xl">
@@ -346,6 +354,16 @@
               <p class="text-sm text-mute mt-2" data-i18n="trustInsp">Inspection avant expédition, et état des lieux à la location.</p>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section id="about" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
+        <div class="mx-auto max-w-page max-w-2xl">
+          <p class="text-sm font-semibold tracking-wide text-accent" data-i18n="introAbout">Boylo Trading</p>
+          <h2 class="font-display font-semibold text-2xl sm:text-3xl mt-1" data-i18n="aboutTitle">Boylo Trading — Qui sommes-nous</h2>
+          <p class="text-mute text-sm mt-2 mb-4" data-i18n="aboutLead">Ce que nous faisons</p>
+          <p class="text-base leading-relaxed max-w-2xl" data-i18n="aboutText">Nous importons des véhicules de Corée vers le Sénégal et proposons la location de voitures 24/7 sur la VDN à Dakar. Bureau au 7 VDN, Ouest Foire.</p>
+          <p class="mt-4 text-sm text-mute">TikTok : <a id="aboutSocial" href="https://www.tiktok.com/@boylotraiding" target="_blank" rel="noopener noreferrer" class="hover:text-ink focus-ring rounded-sm">@boylotraiding</a></p>
         </div>
       </section>
 
@@ -475,8 +493,8 @@
         <p class="font-medium mb-3" data-i18n="navImport">Import Corée</p>
         <ul class="space-y-2 text-mute">
           <li><a href="#import" class="hover:text-ink focus-ring rounded-sm" data-i18n="ctaStock">Explorer le Stock Corée</a></li>
-          <li><a href="#suivi" class="hover:text-ink focus-ring rounded-sm" data-i18n="navTrack">Suivi Conteneur</a></li>
-          <li><a href="#simulateur" class="hover:text-ink focus-ring rounded-sm" data-i18n="simNav">Simulateur</a></li>
+          <li><a href="#suivi" class="hover:text-ink focus-ring rounded-sm" data-i18n="navTrack">Suivi véhicule</a></li>
+          <li><a href="#simulateur" class="hover:text-ink focus-ring rounded-sm" data-i18n="simNav">Simulateur de commande</a></li>
         </ul>
       </div>
       <div>
@@ -651,16 +669,16 @@ const MARGINS = [
 const I18N = {
   fr: {
     skip: "Aller au contenu", logoAria: "BOYLOTRADING, accueil",
-    navImport: "Import Corée", navRental: "Location VDN 24/7", navTrack: "Suivi Conteneur",
+    navImport: "Import Corée", navRental: "Location VDN 24/7", navTrack: "Suivi véhicule",
     ctaStock: "Explorer le Stock Corée", ctaRent: "Louer sur la VDN",
     openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu",
     modeClient: "Mode Client", modeAdmin: "Cockpit Admin",
     heroTitle: "Votre véhicule importé de Corée ou loué sur la VDN en 2 clics",
     heroSub: "Stock Corée visible par statut. Location au 7 VDN, Ouest Foire, jour et nuit.",
-    calcTitle: "Coût rendu & acompte",
+    calcTitle: "Combien ça coûte, livré à Dakar ?",
     calcHint: "",
     calcTier: "Catégorie du véhicule",
-    calcCif: "CIF Dakar", calcCustoms: "Douane", calcLanded: "Coût rendu estimé",
+    calcCif: "Prix du véhicule livré à Dakar", calcCustoms: "Douane", calcLanded: "Total clé en main",
     calcDeposit: "Acompte 30 %",
     calcDisclaimer: "",
     demoBadge: "",
@@ -682,12 +700,12 @@ const I18N = {
     emptyTitle: "Aucune voiture ne correspond", emptyText: "Élargissez la recherche ou réinitialisez les filtres.",
     reset: "Réinitialiser les filtres",
     rentalTitle: "Location VDN 24/7",
-    rentalLead: "Bureau au 7 VDN, Ouest Foire, Dakar (PGWJ+382). Ouvert jour et nuit.",
+    rentalLead: "Choisissez vos dates et réservez au 7 VDN, jour et nuit.",
     available: "Disponible", unavailable: "Indisponible",
     perDay: "/ jour", perWeek: "/ semaine",
     waRent: "Réserver sur WhatsApp", inspOpen: "État des lieux & pièce d'identité",
-    trackTitle: "Suivi conteneur",
-    trackLead: "Suivez votre dossier de Incheon au Port de Dakar.",
+    trackTitle: "Suivi de votre véhicule",
+    trackLead: "Entrez votre référence pour voir où en est votre véhicule.",
     cIncheon: "Préparation et stock Corée", cBusan: "Chargement RoRo", cTanger: "Escale", cDakar: "Arrivée et douane",
     trackLabel: "Référence de suivi", trackSubmit: "Suivre",
     trackHint: "",
@@ -695,7 +713,7 @@ const I18N = {
     trackSample: "",
     trackShip: "Navire",
     done: "Terminé", current: "En cours", upcoming: "À venir",
-    corridorSteps: ["Incheon", "Busan", "Tanger Med", "Port Autonome de Dakar"],
+    corridorSteps: ["Achat en Corée", "Expédition", "Arrivée au port de Dakar", "Remise des clés"],
     trustTitle: "Ce que vous pouvez vérifier",
     trustCorridorTitle: "Corridor de route",
     trustCorridor: "Incheon → Busan → Tanger Med → Port Autonome de Dakar.",
@@ -729,7 +747,7 @@ const I18N = {
     inspSubmit: "Enregistrer la fiche", inspOk: "Fiche enregistrée.",
     inspMissing: "Nom, pièce, permis et téléphone sont requis.",
     priceOf: "Prix affiché", depositOf: "Acompte 30 %",
-    priceCle: "Dédouané / Clé en main Dakar",
+    priceCle: "Clé en main Dakar",
     pricePort: "Prix port / Hors douane",
     priceModeHint: "",
     filterFuel: "Carburant",
@@ -737,8 +755,8 @@ const I18N = {
     share: "Partager le lien",
     shareCopied: "Lien copié.",
     waGreen: "WhatsApp",
-    simNav: "Simulateur",
-    simTitle: "Simulateur Commande Corée",
+    simNav: "Simulateur de commande",
+    simTitle: "Simulateur de commande en Corée",
     simLead: "Indiquez le modèle, les années et votre budget.",
     simStep1: "Modèle et années",
     simStep2: "Budget cible",
@@ -785,21 +803,34 @@ const I18N = {
     qaPublish: "Publier dans le showroom",
     qaNeed: "Marque, modèle, année et prix sont requis.",
     qaOk: "Fiche publiée dans le stock.",
+    introHero: "Connaissez votre coût",
+    introHeroLine: "Voyez le prix clé en main et l'acompte, pour un véhicule livré à Dakar.",
+    introStock: "Choisissez votre véhicule",
+    introStockLine: "Parcourez le stock par modèle et par statut.",
+    introSim: "Commandez en Corée",
+    introRent: "Louez une voiture",
+    introTrack: "Suivez votre véhicule",
+    introAbout: "Boylo Trading",
+    cStep1: "Achat en Corée", cStep2: "Expédition", cStep3: "Arrivée au port de Dakar", cStep4: "Remise des clés",
+    voirPlus: "Voir plus", voirMoins: "Voir moins",
+    aboutTitle: "Boylo Trading — Qui sommes-nous",
+    aboutLead: "Ce que nous faisons",
+    aboutText: "Nous importons des véhicules de Corée vers le Sénégal et proposons la location de voitures 24/7 sur la VDN à Dakar. Bureau au 7 VDN, Ouest Foire.",
     carouselPrev: "Précédent", carouselNext: "Suivant"
 
   },
   en: {
     skip: "Skip to content", logoAria: "BOYLOTRADING, home",
-    navImport: "Korea import", navRental: "VDN rental 24/7", navTrack: "Container tracking",
+    navImport: "Korea import", navRental: "VDN rental 24/7", navTrack: "Track your vehicle",
     ctaStock: "Browse Korea stock", ctaRent: "Rent on the VDN",
     openMenu: "Open menu", closeMenu: "Close menu",
     modeClient: "Client mode", modeAdmin: "Admin cockpit",
     heroTitle: "Your Korea-imported car or a VDN rental, in two clicks",
     heroSub: "Korea stock by status. Rentals at 7 VDN, Ouest Foire, day and night.",
-    calcTitle: "Landed cost & deposit",
+    calcTitle: "How much does it cost, delivered to Dakar?",
     calcHint: "",
     calcTier: "Vehicle tier",
-    calcCif: "CIF Dakar", calcCustoms: "Customs", calcLanded: "Estimated landed cost",
+    calcCif: "Vehicle price delivered to Dakar", calcCustoms: "Customs", calcLanded: "All-in total",
     calcDeposit: "30% deposit",
     calcDisclaimer: "",
     demoBadge: "",
@@ -821,12 +852,12 @@ const I18N = {
     emptyTitle: "No cars match", emptyText: "Widen the search or reset the filters.",
     reset: "Reset filters",
     rentalTitle: "VDN rental 24/7",
-    rentalLead: "Desk at 7 VDN, Ouest Foire, Dakar (PGWJ+382). Open day and night.",
+    rentalLead: "Pick your dates and book at 7 VDN, day and night.",
     available: "Available", unavailable: "Unavailable",
     perDay: "/ day", perWeek: "/ week",
     waRent: "Book on WhatsApp", inspOpen: "Inspection & ID intake",
-    trackTitle: "Container tracking",
-    trackLead: "Track your shipment from Incheon to the Port of Dakar.",
+    trackTitle: "Track your vehicle",
+    trackLead: "Enter your reference to see where your vehicle is.",
     cIncheon: "Prep and Korea stock", cBusan: "RoRo loading", cTanger: "Call", cDakar: "Arrival and customs",
     trackLabel: "Tracking reference", trackSubmit: "Track",
     trackHint: "",
@@ -834,7 +865,7 @@ const I18N = {
     trackSample: "",
     trackShip: "Vessel",
     done: "Done", current: "In progress", upcoming: "Upcoming",
-    corridorSteps: ["Incheon", "Busan", "Tanger Med", "Port Autonome de Dakar"],
+    corridorSteps: ["Purchase in Korea", "Shipping", "Arrival at the Port of Dakar", "Key handover"],
     trustTitle: "What you can verify",
     trustCorridorTitle: "Shipping corridor",
     trustCorridor: "Incheon → Busan → Tanger Med → Port Autonome de Dakar.",
@@ -868,16 +899,16 @@ const I18N = {
     inspSubmit: "Save sheet", inspOk: "Sheet saved.",
     inspMissing: "Name, ID, licence and phone are required.",
     priceOf: "Listed price", depositOf: "30% deposit",
-    priceCle: "Cleared / Turn-key Dakar", pricePort: "Port price / Ex-customs",
+    priceCle: "All-in Dakar price", pricePort: "Port price / Ex-customs",
     priceModeHint: "",
     filterFuel: "Fuel",
     engine: "Engine", share: "Share link", shareCopied: "Link copied.", waGreen: "WhatsApp",
-    simNav: "Simulator", simTitle: "Korea order simulator",
+    simNav: "Order simulator", simTitle: "Korea order simulator",
     simLead: "Choose a model, years and your budget.",
     simStep1: "Model and years", simStep2: "Target budget", simStep3: "Result",
     simModel: "Model", simYearFrom: "Year from", simYearTo: "Year to", simBudget: "Budget (FCFA)",
     simNext: "Continue", simBack: "Back", simSee: "See result",
-    simBracket: "Turn-key bracket",
+    simBracket: "All-in price range",
     simTime: "Time to the Port of Dakar: ~{n} days.",
     simOk: "This budget sits in the bracket for this model.",
     simTight: "This budget is tight for this model and these years. A better fit would be {min} – {max} FCFA.",
@@ -898,20 +929,33 @@ const I18N = {
     qaFcfa: "Port price (FCFA)", qaPublish: "Publish to showroom",
     qaNeed: "Make, model, year and price are required.",
     qaOk: "Listing published to stock.",
+    introHero: "Know your cost",
+    introHeroLine: "See the all-in price and the deposit, for a vehicle delivered to Dakar.",
+    introStock: "Choose your vehicle",
+    introStockLine: "Browse stock by model and by status.",
+    introSim: "Order from Korea",
+    introRent: "Rent a car",
+    introTrack: "Track your vehicle",
+    introAbout: "Boylo Trading",
+    cStep1: "Purchase in Korea", cStep2: "Shipping", cStep3: "Arrival at the Port of Dakar", cStep4: "Key handover",
+    voirPlus: "See more", voirMoins: "See less",
+    aboutTitle: "Boylo Trading — Who we are",
+    aboutLead: "What we do",
+    aboutText: "We import Korean vehicles to Senegal and offer 24/7 car rental on the VDN in Dakar. Based at 7 VDN, Ouest Foire.",
     carouselPrev: "Previous", carouselNext: "Next"
   },
   ko: {
     skip: "본문으로 건너뛰기", logoAria: "BOYLOTRADING 홈",
-    navImport: "한국 수입", navRental: "VDN 렌탈 24/7", navTrack: "컨테이너 추적",
+    navImport: "한국 수입", navRental: "VDN 렌탈 24/7", navTrack: "차량 추적",
     ctaStock: "한국 재고 보기", ctaRent: "VDN에서 렌트",
     openMenu: "메뉴 열기", closeMenu: "메뉴 닫기",
     modeClient: "고객 모드", modeAdmin: "관리자 콕핏",
     heroTitle: "한국 수입 차량 또는 VDN 렌탈, 클릭 두 번이면 됩니다",
     heroSub: "한국 재고는 상태별로 볼 수 있습니다. 다카르 7 VDN, Ouest Foire에서 주야간 렌탈.",
-    calcTitle: "도착원가와 계약금",
+    calcTitle: "다카르 인도 가격은 얼마인가요?",
     calcHint: "",
     calcTier: "차량 구간",
-    calcCif: "CIF 다카르", calcCustoms: "관세", calcLanded: "추정 도착원가",
+    calcCif: "다카르까지 차량 가격", calcCustoms: "관세", calcLanded: "인도 총액",
     calcDeposit: "계약금 30%",
     calcDisclaimer: "",
     demoBadge: "",
@@ -933,12 +977,12 @@ const I18N = {
     emptyTitle: "해당하는 차량이 없습니다", emptyText: "검색을 넓히거나 필터를 초기화하세요.",
     reset: "필터 초기화",
     rentalTitle: "VDN 렌탈 24/7",
-    rentalLead: "다카르 7 VDN, Ouest Foire (PGWJ+382). 주야간 운영.",
+    rentalLead: "날짜를 고르고 7 VDN에서 주야간으로 예약하세요.",
     available: "예약 가능", unavailable: "예약 불가",
     perDay: "/일", perWeek: "/주",
     waRent: "WhatsApp으로 예약", inspOpen: "점검 및 신분증 접수",
-    trackTitle: "컨테이너 추적",
-    trackLead: "인천에서 다카르 항까지 화물을 추적하세요.",
+    trackTitle: "차량 추적",
+    trackLead: "차량이 어디까지 왔는지 보려면 조회 번호를 입력하세요.",
     cIncheon: "한국 재고 준비", cBusan: "RoRo 선적", cTanger: "기항", cDakar: "도착 및 통관",
     trackLabel: "추적 번호", trackSubmit: "조회",
     trackHint: "",
@@ -946,7 +990,7 @@ const I18N = {
     trackSample: "",
     trackShip: "선박",
     done: "완료", current: "진행 중", upcoming: "예정",
-    corridorSteps: ["인천", "부산", "탄헤르메드", "다카르 자치항"],
+    corridorSteps: ["한국에서 구매", "선적", "다카르 항 도착", "차량 인도"],
     trustTitle: "확인할 수 있는 내용",
     trustCorridorTitle: "운송 항로",
     trustCorridor: "인천 → 부산 → 탄헤르메드 → 다카르 자치항.",
@@ -980,11 +1024,11 @@ const I18N = {
     inspSubmit: "시트 저장", inspOk: "저장되었습니다.",
     inspMissing: "이름, 신분증, 면허, 전화가 필요합니다.",
     priceOf: "표시 가격", depositOf: "계약금 30%",
-    priceCle: "통관 완료 / 다카르 인도", pricePort: "항만 가격 / 미통관",
+    priceCle: "다카르 인도 가격", pricePort: "항만 가격 / 미통관",
     priceModeHint: "",
     filterFuel: "연료",
     engine: "배기량", share: "링크 공유", shareCopied: "링크가 복사되었습니다.", waGreen: "WhatsApp",
-    simNav: "시뮬레이터", simTitle: "한국 주문 시뮬레이터",
+    simNav: "주문 시뮬레이터", simTitle: "한국 주문 시뮬레이터",
     simLead: "모델, 연식, 예산을 입력하세요.",
     simStep1: "모델과 연식", simStep2: "목표 예산", simStep3: "결과",
     simModel: "모델", simYearFrom: "최소 연식", simYearTo: "최대 연식", simBudget: "예산 (FCFA)",
@@ -1010,6 +1054,19 @@ const I18N = {
     qaFcfa: "항구 가격 (FCFA)", qaPublish: "쇼룸에 게시",
     qaNeed: "브랜드, 모델, 연식, 가격이 필요합니다.",
     qaOk: "재고에 게시되었습니다.",
+    introHero: "비용을 확인하세요",
+    introHeroLine: "다카르 인도 가격과 계약금을 확인하세요.",
+    introStock: "차량을 고르세요",
+    introStockLine: "모델과 상태별로 재고를 살펴보세요.",
+    introSim: "한국에서 주문하기",
+    introRent: "차를 렌트하세요",
+    introTrack: "차량을 추적하세요",
+    introAbout: "Boylo Trading",
+    cStep1: "한국에서 구매", cStep2: "선적", cStep3: "다카르 항 도착", cStep4: "차량 인도",
+    voirPlus: "더 보기", voirMoins: "접기",
+    aboutTitle: "Boylo Trading — 소개",
+    aboutLead: "하는 일",
+    aboutText: "한국 차량을 세네갈로 수입하고, 다카르 VDN에서 24/7 렌탈을 제공합니다. 사무실은 7 VDN, Ouest Foire입니다.",
     carouselPrev: "이전", carouselNext: "다음"
   }
 };
@@ -1021,6 +1078,7 @@ let statusFilter = "all";
 let bodyFilter = "all";
 let budgetMax = 0;
 let stockReady = false;
+let stockExpanded = false;
 let depositCar = null;
 let lastFocus = null;
 let priceMode = "cle"; // 'cle' = Dédouané / Clé en main, 'port' = Prix port / Hors douane
@@ -1229,8 +1287,9 @@ function bindCardActions(root) {
   root.querySelectorAll("[data-share]").forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); shareCar(b.getAttribute("data-share")); }));
 }
 function jumpToCar(id) {
-  let el = document.getElementById("car-" + id);
-  if (!el) {
+  let list = filteredCars();
+  let idx = list.findIndex((c) => c.id === id);
+  if (idx < 0) {
     statusFilter = "all";
     bodyFilter = "all";
     budgetMax = 0;
@@ -1238,9 +1297,12 @@ function jumpToCar(id) {
     const budget = document.getElementById("budget");
     if (search) search.value = "";
     if (budget) budget.value = "0";
-    renderStock(false);
-    el = document.getElementById("car-" + id);
+    list = filteredCars();
+    idx = list.findIndex((c) => c.id === id);
   }
+  if (idx >= 4) stockExpanded = true;
+  renderStock(false);
+  const el = document.getElementById("car-" + id);
   if (!el) return;
   el.classList.add("ring-2", "ring-accent");
   el.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1334,8 +1396,11 @@ function renderStock(withSkeleton) {
     b.classList.toggle("text-bg", on);
     b.classList.toggle("text-mute", !on);
   });
+  const moreWrap = document.getElementById("stockMoreWrap");
+  const moreBtn = document.getElementById("stockMore");
   if (withSkeleton && !stockReady) {
     empty.classList.add("hidden");
+    if (moreWrap) moreWrap.classList.add("hidden");
     renderSkeletons();
     count.textContent = "";
     setTimeout(() => { stockReady = true; renderStock(false); }, 500);
@@ -1346,11 +1411,21 @@ function renderStock(withSkeleton) {
   if (!list.length) {
     grid.innerHTML = "";
     empty.classList.remove("hidden");
+    if (moreWrap) moreWrap.classList.add("hidden");
     return;
   }
   empty.classList.add("hidden");
   updatePriceModeBtns();
-  grid.innerHTML = list.map((c) => carCard(c, false)).join("");
+  const visible = (stockExpanded || list.length <= 4) ? list : list.slice(0, 4);
+  grid.innerHTML = visible.map((c) => carCard(c, false)).join("");
+  if (moreWrap && moreBtn) {
+    if (list.length > 4) {
+      moreWrap.classList.remove("hidden");
+      moreBtn.textContent = stockExpanded ? t("voirMoins") : t("voirPlus");
+    } else {
+      moreWrap.classList.add("hidden");
+    }
+  }
   bindCardActions(grid);
   icons();
   highlightCarFromUrl();
@@ -1466,6 +1541,11 @@ function highlightCarFromUrl() {
   let id = params.get("car");
   if (!id && location.hash.startsWith("#car-")) id = location.hash.slice(5);
   if (!id) return;
+  const idx = filteredCars().findIndex((c) => c.id === id);
+  if (idx >= 4 && !stockExpanded) {
+    stockExpanded = true;
+    renderStock(false);
+  }
   const el = document.getElementById("car-" + id);
   if (!el) return;
   el.classList.add("ring-2", "ring-accent");
@@ -1710,12 +1790,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".drawer-link").forEach((a) => a.addEventListener("click", closeMenu));
   document.getElementById("tier").addEventListener("change", updateCalc);
   document.getElementById("currency").addEventListener("change", (e) => { currency = e.target.value; updateCalc(); renderStock(false); renderRentals(); renderAdmin(); });
-  document.getElementById("search").addEventListener("input", () => renderStock(false));
-  document.getElementById("budget").addEventListener("change", (e) => { budgetMax = Number(e.target.value) || 0; renderStock(false); });
-  document.querySelectorAll(".status-tab").forEach((b) => b.addEventListener("click", () => { statusFilter = b.getAttribute("data-status"); renderStock(false); }));
-  document.querySelectorAll(".body-tab").forEach((b) => b.addEventListener("click", () => { bodyFilter = b.getAttribute("data-body"); renderStock(false); }));
+  document.getElementById("stockMore").addEventListener("click", () => { stockExpanded = !stockExpanded; renderStock(false); });
+  document.getElementById("search").addEventListener("input", () => { stockExpanded = false; renderStock(false); });
+  document.getElementById("budget").addEventListener("change", (e) => { budgetMax = Number(e.target.value) || 0; stockExpanded = false; renderStock(false); });
+  document.querySelectorAll(".status-tab").forEach((b) => b.addEventListener("click", () => { statusFilter = b.getAttribute("data-status"); stockExpanded = false; renderStock(false); }));
+  document.querySelectorAll(".body-tab").forEach((b) => b.addEventListener("click", () => { bodyFilter = b.getAttribute("data-body"); stockExpanded = false; renderStock(false); }));
   document.getElementById("resetFilters").addEventListener("click", () => {
-    statusFilter = "all"; bodyFilter = "all"; budgetMax = 0;
+    statusFilter = "all"; bodyFilter = "all"; budgetMax = 0; stockExpanded = false;
     document.getElementById("search").value = "";
     document.getElementById("budget").value = "0";
     renderStock(false);
