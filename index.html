@@ -22,8 +22,7 @@
             avail: "#10B981",
             ink: "#F3F4F6",
             mute: "#9CA3AF",
-            hair: "rgba(255,255,255,0.08)",
-            wa: "#25D366"
+            hair: "rgba(255,255,255,0.08)"
           },
           fontFamily: {
             sans: ["Plus Jakarta Sans", "Pretendard Variable", "Noto Sans KR", "sans-serif"],
@@ -52,6 +51,24 @@
     .drawer.open { transform: translateX(0); }
     .skel { background: linear-gradient(90deg, #171C26 0%, #1E2533 50%, #171C26 100%); background-size: 200% 100%; animation: skel 1.1s ease-in-out infinite; }
     @keyframes skel { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+    .carousel-scroller {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .carousel-scroller::-webkit-scrollbar { display: none; }
+    .carousel-slide {
+      scroll-snap-align: start;
+      flex: 0 0 78%;
+      min-width: 0;
+    }
+    @media (min-width: 768px) {
+      .carousel-slide { flex-basis: 300px; }
+    }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -61,7 +78,7 @@
 <body class="font-sans antialiased bg-bg text-ink">
 
   <div class="hidden" aria-hidden="true">
-    <span class="bg-accent text-bg text-mute text-avail border-avail/40 pointer-events-none opacity-40 font-ko ml-6 mr-6 font-mono tabular text-accent border-t border-white/[0.08] hover:bg-amber-400 hover:bg-white/[0.04] ring-2 ring-accent scroll-mt-24 bg-wa"></span>
+    <span class="bg-accent text-bg text-mute text-avail border-avail/40 pointer-events-none opacity-40 font-ko ml-6 mr-6 font-mono tabular text-accent border-t border-white/[0.08] hover:bg-amber-400 hover:bg-white/[0.04] ring-2 ring-accent scroll-mt-24"></span>
   </div>
 
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[80] bg-accent text-bg px-4 py-2 rounded-sm focus-ring" data-i18n="skip">Aller au contenu</a>
@@ -82,7 +99,7 @@
         <a href="#import" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="navImport">Import Corée</a>
         <a href="#rental" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="navRental">Location VDN 24/7</a>
         <a href="#suivi" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="navTrack">Suivi Conteneur</a>
-        <a href="#commande" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="simNav">Commande Corée</a>
+        <a href="#simulateur" class="focus-ring btn-touch px-3 inline-flex items-center text-sm text-mute hover:text-ink transition" data-i18n="simNav">Simulateur</a>
       </nav>
 
       <div class="hidden md:flex items-center gap-2 ml-auto">
@@ -113,8 +130,7 @@
       <a href="#import" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="navImport">Import Corée</a>
       <a href="#rental" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="navRental">Location VDN 24/7</a>
       <a href="#suivi" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="navTrack">Suivi Conteneur</a>
-      <a href="#commande" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="simNav">Commande Corée</a>
-      <a href="#fournisseurs" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="navSupply">Fournisseurs</a>
+      <a href="#simulateur" class="drawer-link focus-ring btn-touch px-2 inline-flex items-center text-base" data-i18n="simNav">Simulateur</a>
     </nav>
     <div class="flex hair rounded-sm overflow-hidden self-start" role="group">
       <button type="button" class="lang-btn focus-ring btn-touch px-3 text-xs font-medium" data-set-lang="fr">FR</button>
@@ -133,7 +149,7 @@
             <h1 class="font-display font-semibold text-[1.75rem] sm:text-4xl lg:text-[2.75rem] leading-[1.15] tracking-tight" data-i18n="heroTitle">Votre véhicule importé de Corée ou loué sur la VDN en 2 clics</h1>
             <p class="mt-4 text-mute text-base sm:text-lg max-w-xl leading-relaxed" data-i18n="heroSub">Stock Corée visible par statut. Location au 7 VDN, Ouest Foire, jour et nuit.</p>
             <div class="mt-8 flex flex-wrap gap-3">
-              <a href="#import" class="focus-ring btn-touch inline-flex items-center justify-center px-5 rounded-sm bg-accent text-bg font-semibold text-sm hover:bg-amber-400 transition" data-i18n="ctaStock">Voir le stock</a>
+              <a href="#import" class="focus-ring btn-touch inline-flex items-center justify-center px-5 rounded-sm bg-accent text-bg font-semibold text-sm hover:bg-amber-400 transition" data-i18n="ctaStock">Explorer le Stock Corée</a>
               <a href="#rental" class="focus-ring btn-touch inline-flex items-center justify-center px-5 rounded-sm hair font-semibold text-sm hover:bg-white/[0.04] transition" data-i18n="ctaRent">Louer sur la VDN</a>
             </div>
           </div>
@@ -171,7 +187,7 @@
             <button type="button" class="body-tab focus-ring btn-touch px-3 rounded-sm text-sm hair" data-body="utilitaire" data-i18n="bodyUtil">Utilitaire</button>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 max-w-xl">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
             <label class="text-xs text-mute block">
               <span class="sr-only" data-i18n="search">Recherche</span>
               <input id="search" type="search" class="focus-ring mt-1 w-full bg-surface hair rounded-sm px-3 h-11 text-sm" data-i18n-placeholder="searchPh" placeholder="Tucson, Porter II…" />
@@ -180,8 +196,21 @@
               <span data-i18n="budgetLabel">Budget max (CFA)</span>
               <select id="budget" class="focus-ring mt-1 w-full bg-surface hair rounded-sm px-3 h-11 text-sm"></select>
             </label>
+            <label class="text-xs text-mute block">
+              <span data-i18n="currency">Devise</span>
+              <select id="currency" class="focus-ring mt-1 w-full bg-surface hair rounded-sm px-3 h-11 text-sm">
+                <option value="XOF">XOF</option>
+                <option value="USD">USD</option>
+                <option value="KRW">KRW</option>
+              </select>
+            </label>
           </div>
 
+          <div class="flex flex-wrap gap-2 mb-6" role="group" aria-label="Price mode">
+            <button type="button" id="priceCle" class="price-mode focus-ring btn-touch px-3 rounded-sm text-sm hair" data-mode="cle" data-i18n="priceCle">Dédouané / Clé en main Dakar</button>
+            <button type="button" id="pricePort" class="price-mode focus-ring btn-touch px-3 rounded-sm text-sm hair" data-mode="port" data-i18n="pricePort">Prix port / Hors douane</button>
+          </div>
+          <div id="stockCarousels" class="space-y-8 mb-10"></div>
           <p id="stockCount" class="text-sm text-mute mb-4"></p>
           <div id="stockGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
           <div id="stockEmpty" class="hidden text-center py-16 hair rounded-md bg-surface">
@@ -192,29 +221,51 @@
         </div>
       </section>
 
-      <section id="commande" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
+      <section id="simulateur" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
         <div class="mx-auto max-w-page">
-          <h2 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="simTitle">Commander depuis la Corée</h2>
-          <p class="text-mute text-sm max-w-2xl mt-2 mb-6" data-i18n="simLead">Choisissez un modèle et un budget. Nous vous répondons sur WhatsApp.</p>
-          <form id="orderForm" class="bg-surface hair rounded-md p-5 sm:p-6 max-w-xl space-y-3">
-            <label class="block text-xs text-mute"><span data-i18n="simModel">Modèle</span>
-              <select id="simModel" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm"></select>
-            </label>
-            <label class="block text-xs text-mute"><span data-i18n="simBudget">Budget (FCFA)</span>
-              <input id="simBudget" type="number" min="0" step="100000" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 font-mono text-sm tabular" />
-            </label>
-            <button type="submit" class="focus-ring btn-touch inline-flex items-center justify-center gap-2 px-5 rounded-sm text-sm font-semibold text-white" style="background:#25D366">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span data-i18n="simSend">Demander sur WhatsApp</span>
-            </button>
-          </form>
+          <h2 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="simTitle">Simulateur Commande Corée</h2>
+          <p class="text-mute text-sm max-w-2xl mt-2 mb-6" data-i18n="simLead">Indiquez le modèle, les années et votre budget.</p>
+          <div class="bg-surface hair rounded-md p-5 sm:p-6 max-w-2xl">
+            <ol class="flex flex-wrap gap-4 text-sm mb-6" id="simSteps">
+              <li data-step="1" class="font-medium"><span class="font-mono text-xs text-mute">01</span> <span data-i18n="simStep1">Modèle et années</span></li>
+              <li data-step="2"><span class="font-mono text-xs text-mute">02</span> <span data-i18n="simStep2">Budget cible</span></li>
+              <li data-step="3"><span class="font-mono text-xs text-mute">03</span> <span data-i18n="simStep3">Résultat</span></li>
+            </ol>
+            <div id="simPane1" class="space-y-3">
+              <label class="block text-xs text-mute"><span data-i18n="simModel">Modèle</span>
+                <select id="simModel" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm"></select>
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <label class="block text-xs text-mute"><span data-i18n="simYearFrom">Année min.</span>
+                  <input id="simYearFrom" type="number" min="2016" max="2026" value="2018" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm" />
+                </label>
+                <label class="block text-xs text-mute"><span data-i18n="simYearTo">Année max.</span>
+                  <input id="simYearTo" type="number" min="2016" max="2026" value="2021" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm" />
+                </label>
+              </div>
+              <button type="button" id="simTo2" class="focus-ring btn-touch px-4 rounded-sm bg-accent text-bg font-semibold text-sm" data-i18n="simNext">Continuer</button>
+            </div>
+            <div id="simPane2" class="space-y-3 hidden">
+              <label class="block text-xs text-mute"><span data-i18n="simBudget">Budget (FCFA)</span>
+                <input id="simBudget" type="number" min="0" step="100000" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 font-mono text-sm tabular" />
+              </label>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" id="simBack1" class="focus-ring btn-touch px-4 rounded-sm hair text-sm" data-i18n="simBack">Retour</button>
+                <button type="button" id="simTo3" class="focus-ring btn-touch px-4 rounded-sm bg-accent text-bg font-semibold text-sm" data-i18n="simSee">Voir le résultat</button>
+              </div>
+            </div>
+            <div id="simPane3" class="space-y-3 hidden">
+              <div id="simResult"></div>
+              <button type="button" id="simBack2" class="focus-ring btn-touch px-4 rounded-sm hair text-sm" data-i18n="simBack">Retour</button>
+            </div>
+          </div>
         </div>
       </section>
 
       <section id="rental" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
         <div class="mx-auto max-w-page">
           <h2 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="rentalTitle">Location VDN 24/7</h2>
-          <p class="text-mute text-sm max-w-2xl mt-2 mb-6" data-i18n="rentalLead">Bureau au 7 VDN, Ouest Foire, Dakar. Ouvert jour et nuit.</p>
+          <p class="text-mute text-sm max-w-2xl mt-2 mb-6" data-i18n="rentalLead">Bureau au 7 VDN, Ouest Foire, Dakar (PGWJ+382). Ouvert jour et nuit.</p>
           <div class="bg-surface hair rounded-md p-4 sm:p-5 mb-6">
             <p class="text-sm font-medium mb-3" data-i18n="rentDates">Dates et zone</p>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -261,7 +312,7 @@
             <li class="bg-surface hair rounded-md p-4">
               <span class="font-mono text-xs text-mute">04</span>
               <p class="font-display font-semibold mt-2">Port Autonome de Dakar</p>
-              <p class="text-sm text-mute mt-1" data-i18n="cDakar">Arrivée à Dakar</p>
+              <p class="text-sm text-mute mt-1" data-i18n="cDakar">Arrivée et douane</p>
             </li>
           </ol>
           <form id="trackForm" class="bg-surface hair rounded-md p-5 sm:p-6 max-w-xl">
@@ -277,7 +328,7 @@
 
       <section class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]" id="trust">
         <div class="mx-auto max-w-page">
-          <h2 class="font-display font-semibold text-2xl sm:text-3xl mb-6" data-i18n="trustTitle">Boylo Trading</h2>
+          <h2 class="font-display font-semibold text-2xl sm:text-3xl mb-6" data-i18n="trustTitle">Ce que vous pouvez vérifier</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <article class="bg-surface hair rounded-md p-5">
               <i data-lucide="ship" class="w-5 h-5 text-mute mb-3"></i>
@@ -298,23 +349,12 @@
         </div>
       </section>
 
-      <section id="fournisseurs" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
-        <div class="mx-auto max-w-page max-w-2xl">
-          <h2 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="supplyTitle">Fournisseurs en Corée</h2>
-          <p class="text-mute text-sm mt-2 mb-6" data-i18n="supplyLead">Vous êtes fournisseur ou exportateur en Corée ? Proposez-nous un véhicule.</p>
-          <a id="waSupply" href="#" target="_blank" rel="noopener noreferrer" class="focus-ring btn-touch inline-flex items-center gap-2 px-5 rounded-sm text-sm font-semibold text-white" style="background:#25D366">
-            <i data-lucide="message-circle" class="w-4 h-4"></i>
-            <span data-i18n="supplyWa">Écrire sur WhatsApp</span>
-          </a>
-        </div>
-      </section>
-
       <section id="contact" class="px-4 sm:px-6 py-12 border-t border-white/[0.08]">
         <div class="mx-auto max-w-page grid lg:grid-cols-2 gap-8 items-start">
           <div>
             <h2 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="leadTitle">Conciergerie WhatsApp</h2>
             <p class="text-mute text-sm mt-2 max-w-md" data-i18n="leadText">Écrivez-nous pour un véhicule, une location ou une commande.</p>
-            <a id="waLauncher" href="#" target="_blank" rel="noopener noreferrer" class="focus-ring btn-touch mt-6 inline-flex items-center gap-2 px-5 rounded-sm text-sm font-semibold text-white" style="background:#25D366">
+            <a id="waLauncher" href="#" target="_blank" rel="noopener noreferrer" class="focus-ring btn-touch mt-6 inline-flex items-center gap-2 px-5 rounded-sm bg-accent text-bg font-semibold text-sm">
               <i data-lucide="message-circle" class="w-4 h-4"></i>
               <span data-i18n="waLaunch">Écrire sur WhatsApp</span>
             </a>
@@ -343,9 +383,15 @@
 
     <div id="adminView" class="hidden px-4 sm:px-6 py-10">
       <div class="mx-auto max-w-page">
-        <h1 class="font-display font-semibold text-2xl sm:text-3xl mb-6" data-i18n="adminTitle">Admin</h1>
+        <div class="flex flex-wrap items-start justify-between gap-3 mb-6">
+          <div>
+            <h1 class="font-display font-semibold text-2xl sm:text-3xl" data-i18n="adminTitle">Cockpit admin</h1>
+            <p class="text-sm text-mute mt-1" data-i18n="adminLead">Acomptes, messages et marges.</p>
+          </div>
+        </div>
         <section class="bg-surface hair rounded-md p-5 mb-6" id="quickAddSection">
-          <h2 class="font-display font-semibold mb-4" data-i18n="quickAdd">Ajout rapide</h2>
+          <h2 class="font-display font-semibold" data-i18n="quickAdd">Ajout rapide</h2>
+          <p class="text-xs text-mute mt-1 mb-4" data-i18n="quickLead">Ajoutez une fiche au stock depuis le téléphone.</p>
           <form id="quickAdd" class="grid grid-cols-1 sm:grid-cols-2 gap-3" novalidate>
             <label class="sm:col-span-2 block text-xs text-mute"><span data-i18n="qaPhoto">Photo</span>
               <input id="qaPhoto" type="file" accept="image/*" capture="environment" class="focus-ring mt-1 w-full text-sm" />
@@ -363,44 +409,51 @@
             <label class="block text-xs text-mute"><span data-i18n="qaKm">Kilométrage</span>
               <input name="km" type="number" min="0" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm" />
             </label>
-            <label class="block text-xs text-mute"><span data-i18n="qaBody">Carrosserie</span>
-              <select name="body" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm">
-                <option value="suv">SUV</option>
-                <option value="berline" data-i18n="bodySedan">Berline</option>
-                <option value="utilitaire" data-i18n="bodyUtil">Utilitaire</option>
+            <label class="block text-xs text-mute"><span data-i18n="qaEngine">Cylindrée</span>
+              <input name="engine" placeholder="2.0" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm" />
+            </label>
+            <label class="block text-xs text-mute"><span data-i18n="filterFuel">Carburant</span>
+              <select name="fuel" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm">
+                <option value="diesel">Diesel</option>
+                <option value="petrol">Essence</option>
               </select>
             </label>
-            <label class="block text-xs text-mute"><span data-i18n="qaStatus">Statut</span>
-              <select name="status" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm">
-                <option value="incheon" data-i18n="stIncheon">En stock Incheon</option>
-                <option value="sea" data-i18n="stSea">En mer</option>
-                <option value="dakar" data-i18n="stDakar">Arrivé Port de Dakar</option>
+            <label class="block text-xs text-mute"><span data-i18n="qaPrice">Prix d'achat</span>
+              <input name="price" type="number" min="0" step="any" required class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 font-mono text-sm" />
+            </label>
+            <label class="block text-xs text-mute"><span data-i18n="qaPriceCur">Devise du prix</span>
+              <select name="priceCur" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm">
+                <option value="USD">USD</option>
+                <option value="KRW">KRW</option>
               </select>
             </label>
-            <label class="sm:col-span-2 block text-xs text-mute"><span data-i18n="qaPrice">Prix clé en main Dakar (FCFA)</span>
-              <input name="price" type="number" min="0" step="1000" required class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 font-mono text-sm" />
+            <label class="block text-xs text-mute"><span data-i18n="qaMargin">Marge % (modifiable)</span>
+              <input name="margin" type="number" min="0" max="80" step="0.5" value="15" class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 font-mono text-sm" />
             </label>
+            <p class="sm:col-span-2 text-sm"><span data-i18n="qaFcfa">Prix port (FCFA)</span> : <span id="qaFcfaOut" class="font-mono tabular">—</span></p>
             <button type="submit" class="sm:col-span-2 focus-ring btn-touch rounded-sm bg-accent text-bg font-semibold text-sm" data-i18n="qaPublish">Publier dans le showroom</button>
           </form>
         </section>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6" id="marginCards"></div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <section class="bg-surface hair rounded-md p-5">
-            <h2 class="font-display font-semibold mb-4" data-i18n="adminDeposits">Demandes</h2>
+            <h2 class="font-display font-semibold mb-4" data-i18n="adminDeposits">Acomptes</h2>
             <div class="overflow-x-auto">
               <table class="w-full text-sm text-left">
                 <thead class="text-xs text-mute">
                   <tr>
                     <th class="py-2 pr-3 font-medium" data-i18n="colRef">Réf.</th>
                     <th class="py-2 pr-3 font-medium" data-i18n="colVehicle">Véhicule</th>
+                    <th class="py-2 pr-3 font-medium" data-i18n="colAmount">Acompte</th>
                     <th class="py-2 font-medium" data-i18n="colStatus">Statut</th>
                   </tr>
                 </thead>
-                <tbody id="requestRows" class="font-mono tabular"></tbody>
+                <tbody id="depositRows" class="font-mono tabular"></tbody>
               </table>
             </div>
           </section>
           <section class="bg-surface hair rounded-md p-5">
-            <h2 class="font-display font-semibold mb-4" data-i18n="adminFeed">Conciergerie FR ⇄ KR</h2>
+            <h2 class="font-display font-semibold mb-1" data-i18n="adminFeed">Conciergerie FR ⇄ KR</h2>
             <div id="msgFeed" class="space-y-3 max-h-80 overflow-y-auto pr-1"></div>
           </section>
         </div>
@@ -421,10 +474,9 @@
       <div>
         <p class="font-medium mb-3" data-i18n="navImport">Import Corée</p>
         <ul class="space-y-2 text-mute">
-          <li><a href="#import" class="hover:text-ink focus-ring rounded-sm" data-i18n="ctaStock">Voir le stock</a></li>
+          <li><a href="#import" class="hover:text-ink focus-ring rounded-sm" data-i18n="ctaStock">Explorer le Stock Corée</a></li>
           <li><a href="#suivi" class="hover:text-ink focus-ring rounded-sm" data-i18n="navTrack">Suivi Conteneur</a></li>
-          <li><a href="#commande" class="hover:text-ink focus-ring rounded-sm" data-i18n="simNav">Commande Corée</a></li>
-          <li><a href="#fournisseurs" class="hover:text-ink focus-ring rounded-sm" data-i18n="navSupply">Fournisseurs</a></li>
+          <li><a href="#simulateur" class="hover:text-ink focus-ring rounded-sm" data-i18n="simNav">Simulateur</a></li>
         </ul>
       </div>
       <div>
@@ -445,308 +497,553 @@
     </div>
   </footer>
 
-  <div id="okModal" class="fixed inset-0 z-[80] hidden" role="dialog" aria-modal="true" aria-labelledby="okTitle">
-    <div class="absolute inset-0 bg-black/70" data-close-ok></div>
-    <div class="relative mx-auto mt-24 w-[min(96%,420px)] bg-surface hair rounded-md p-6 shadow-xl text-center">
-      <h2 id="okTitle" class="font-display font-semibold text-xl" data-i18n="okTitle">Demande envoyée</h2>
-      <button type="button" class="focus-ring btn-touch mt-6 w-full rounded-sm bg-accent text-bg font-semibold text-sm" data-close-ok data-i18n="okClose">Fermer</button>
+  <!-- Deposit modal -->
+  <div id="depositModal" class="fixed inset-0 z-[80] hidden" role="dialog" aria-modal="true" aria-labelledby="depositTitle">
+    <div class="absolute inset-0 bg-black/70" data-close-deposit></div>
+    <div class="relative mx-auto mt-10 sm:mt-20 w-[min(96%,520px)] bg-surface hair rounded-md p-6 shadow-xl">
+      <div class="flex justify-between items-start gap-3">
+        <h2 id="depositTitle" class="font-display font-semibold text-xl" data-i18n="depositTitle">Bloquer avec 30 % d'acompte</h2>
+        <button type="button" class="focus-ring btn-touch inline-flex items-center justify-center rounded-sm hair" data-close-deposit data-i18n-aria="close">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="depositSummary" class="mt-4 text-sm space-y-1"></div>
+      <fieldset class="mt-5">
+        <legend class="text-xs text-mute mb-2" data-i18n="payMethod">Moyen de paiement</legend>
+        <div class="grid grid-cols-1 gap-2">
+          <label class="hair rounded-sm px-3 h-11 flex items-center gap-2 text-sm"><input type="radio" name="pay" value="wave" checked class="accent-amber-500" /> Wave</label>
+          <label class="hair rounded-sm px-3 h-11 flex items-center gap-2 text-sm"><input type="radio" name="pay" value="orange" class="accent-amber-500" /> Orange Money</label>
+          <label class="hair rounded-sm px-3 h-11 flex items-center gap-2 text-sm"><input type="radio" name="pay" value="virement" class="accent-amber-500" /> <span data-i18n="payWire">Virement</span></label>
+        </div>
+      </fieldset>
+      <button type="button" id="simPay" class="focus-ring btn-touch mt-5 w-full rounded-sm bg-accent text-bg font-semibold text-sm" data-i18n="simPay">Confirmer le paiement</button>
     </div>
   </div>
 
+  <!-- Receipt modal -->
+  <div id="receiptModal" class="fixed inset-0 z-[85] hidden" role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
+    <div class="absolute inset-0 bg-black/70" data-close-receipt></div>
+    <div class="relative mx-auto mt-10 sm:mt-16 w-[min(96%,480px)] bg-surface hair rounded-md p-6">
+      <div class="flex justify-between items-start">
+        <h2 id="receiptTitle" class="font-display font-semibold" data-i18n="receiptTitle">Reçu</h2>
+        <button type="button" class="focus-ring btn-touch inline-flex items-center justify-center rounded-sm hair" data-close-receipt>
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="receiptBody" class="mt-4 font-mono text-xs space-y-2 whitespace-pre-wrap"></div>
+      <button type="button" class="focus-ring btn-touch mt-5 w-full hair rounded-sm text-sm" data-close-receipt data-i18n="close">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Inspection drawer -->
+  <div id="inspBackdrop" class="fixed inset-0 z-[70] bg-black/60 hidden"></div>
+  <aside id="inspDrawer" class="fixed top-0 right-0 z-[75] h-full w-[min(100%,420px)] bg-surface border-l border-white/[0.08] p-6 overflow-y-auto hidden" role="dialog" aria-modal="true" aria-labelledby="inspTitle">
+    <div class="flex items-center justify-between mb-4">
+      <h2 id="inspTitle" class="font-display font-semibold" data-i18n="inspTitle">État des lieux &amp; pièce d'identité</h2>
+      <button type="button" id="inspClose" class="focus-ring btn-touch inline-flex items-center justify-center rounded-sm hair">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <form id="inspForm" class="space-y-3">
+      <input type="hidden" name="vehicle" />
+      <label class="block text-xs text-mute"><span data-i18n="yourName">Nom</span><input name="name" required class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm" /></label>
+      <label class="block text-xs text-mute"><span data-i18n="idNumber">N° pièce d'identité</span><input name="idnum" required class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm" /></label>
+      <label class="block text-xs text-mute"><span data-i18n="license">Permis</span><input name="license" required class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm" /></label>
+      <label class="block text-xs text-mute"><span data-i18n="phoneWa">Téléphone / WhatsApp</span><input name="phone" required class="focus-ring mt-1 w-full bg-elevated hair rounded-sm px-3 h-11 text-sm" /></label>
+      <fieldset class="text-xs text-mute">
+        <legend class="mb-2" data-i18n="inspChecks">Contrôles visuels</legend>
+        <label class="flex items-center gap-2 h-11"><input type="checkbox" name="lights" class="accent-amber-500" /> <span data-i18n="chkLights">Feux</span></label>
+        <label class="flex items-center gap-2 h-11"><input type="checkbox" name="body" class="accent-amber-500" /> <span data-i18n="chkBody">Carrosserie</span></label>
+        <label class="flex items-center gap-2 h-11"><input type="checkbox" name="fuel" class="accent-amber-500" /> <span data-i18n="chkFuel">Niveau de carburant</span></label>
+      </fieldset>
+      <button type="submit" class="focus-ring btn-touch w-full rounded-sm bg-accent text-bg font-semibold text-sm" data-i18n="inspSubmit">Enregistrer la fiche</button>
+    </form>
+  </aside>
+
+  <div id="toast" class="fixed bottom-5 right-5 z-[90] hidden max-w-sm bg-elevated hair rounded-sm px-4 py-3 text-sm shadow-lg" role="status"></div>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
 /* ========================================================================
-   Sample / placeholder data for this mock-up only. Not shown in the UI:
-   inventory, VINs, prices (priceXof = clé en main Dakar), hero tier prices,
-   booked ranges, zone fees, tracking refs, request list, FR/KR messages,
-   and the WhatsApp number (e164 221000000000 / display +221 XX XXX XX XX).
-   Payments are non-functional; the success modal only says "Demande envoyée".
+   BOYLOTRADING — SAMPLE / DEMO DATA
+   Inventory, VIN, prices, rental rates, CIF values, FX, 30% deposit,
+   payment methods (Wave, Orange Money, virement), ship names, auction
+   grades (none shown as confirmed), margins and WhatsApp threads are
+   UNCONFIRMED EXAMPLES for this mock-up only.
+   Payments are simulated. No backend. WhatsApp number is a PLACEHOLDER.
    ======================================================================== */
 const WHATSAPP = { e164: "221000000000", display: "+221 XX XXX XX XX" };
+/* Demo FX only — not live market feeds. */
+const FX = { USD_XOF: 600, USD_KRW: 1380 };
+const CUSTOMS_RATE = 0.64; // ESTIMATE of duties on customs value, not a quote
+const DEPOSIT_RATE = 0.30; // UNCONFIRMED policy, demo only
 
-const CARS = [
-  { id: "BY-TUC-18-041", make: "Hyundai", model: "Tucson", year: 2018, km: 72000, fuel: "diesel", gearbox: "auto", engine: "2.0", priceXof: 19352000, status: "incheon", body: "suv" },
-  { id: "BY-SFE-17-118", make: "Hyundai", model: "Santa Fe", year: 2017, km: 94000, fuel: "diesel", gearbox: "auto", engine: "2.2", priceXof: 17056000, status: "dakar", body: "suv" },
-  { id: "BY-SPT-19-207", make: "Kia", model: "Sportage", year: 2019, km: 58000, fuel: "diesel", gearbox: "auto", engine: "2.0", priceXof: 21648000, status: "sea", body: "suv" },
-  { id: "BY-SOR-18-055", make: "Kia", model: "Sorento", year: 2018, km: 81000, fuel: "diesel", gearbox: "auto", engine: "2.2", priceXof: 20664000, status: "incheon", body: "suv" },
-  { id: "BY-PRT-20-031", make: "Hyundai", model: "Porter II", year: 2020, km: 64000, fuel: "diesel", gearbox: "manual", engine: "2.5", priceXof: 14596000, status: "incheon", body: "utilitaire" },
-  { id: "BY-TUC-21-133", make: "Hyundai", model: "Tucson", year: 2021, km: 39000, fuel: "diesel", gearbox: "auto", engine: "1.6", priceXof: 27552000, status: "sea", body: "suv" },
-  { id: "BY-AVA-19-221", make: "Hyundai", model: "Avante", year: 2019, km: 61000, fuel: "petrol", gearbox: "auto", engine: "1.6", priceXof: 12956000, status: "dakar", body: "berline" },
-  { id: "BY-K5-20-164", make: "Kia", model: "K5", year: 2020, km: 52000, fuel: "petrol", gearbox: "auto", engine: "2.0", priceXof: 16072000, status: "sea", body: "berline" },
-  { id: "BY-PRT-18-077", make: "Hyundai", model: "Porter II", year: 2018, km: 101000, fuel: "diesel", gearbox: "manual", engine: "2.5", priceXof: 12136000, status: "dakar", body: "utilitaire" },
-  { id: "BY-SPO-20-044", make: "Kia", model: "Sportage", year: 2020, km: 47000, fuel: "petrol", gearbox: "auto", engine: "1.6", priceXof: 23124000, status: "dakar", body: "suv" },
-  { id: "BY-SFE-19-009", make: "Hyundai", model: "Santa Fe", year: 2019, km: 70000, fuel: "diesel", gearbox: "auto", engine: "2.2", priceXof: 22796000, status: "incheon", body: "suv" },
-  { id: "BY-SOR-21-012", make: "Kia", model: "Sorento", year: 2021, km: 28000, fuel: "diesel", gearbox: "auto", engine: "2.2", priceXof: 30340000, status: "sea", body: "suv" }
-];
-/* priceXof is the displayed clé-en-main Dakar price. */
-
-/* Hero calculator sample rates (not shown in the UI): FX USD_XOF 600, duties 0.64 of CIF, deposit 0.30 of landed. */
-const FX = { USD_XOF: 600 };
-const CUSTOMS_RATE = 0.64;
-const DEPOSIT_RATE = 0.30;
 const TIERS = [
   { id: "city", cifUsd: 8000 },
   { id: "suvc", cifUsd: 14000 },
   { id: "suvl", cifUsd: 18000 },
   { id: "util", cifUsd: 11000 }
 ];
-const SIM_MODELS = ["Tucson", "Sportage", "Santa Fe", "Sorento", "Porter II", "Avante", "K5"];
-const ZONE_FEES = { dakar: 0, aibd: 15000, regions: 40000 };
+
+const CARS = [
+  { id: "BY-TUC-18-041", make: "Hyundai", model: "Tucson", year: 2018, km: 72000, fuel: "diesel", gearbox: "auto", engine: "2.0", priceXof: 11800000, status: "incheon", body: "suv", vin: "DEMO-KMHJ81-041" },
+  { id: "BY-SFE-17-118", make: "Hyundai", model: "Santa Fe", year: 2017, km: 94000, fuel: "diesel", gearbox: "auto", engine: "2.2", priceXof: 10400000, status: "dakar", body: "suv", vin: "DEMO-KMHS81-118" },
+  { id: "BY-SPT-19-207", make: "Kia", model: "Sportage", year: 2019, km: 58000, fuel: "diesel", gearbox: "auto", engine: "2.0", priceXof: 13200000, status: "sea", body: "suv", vin: "DEMO-KNDP81-207" },
+  { id: "BY-SOR-18-055", make: "Kia", model: "Sorento", year: 2018, km: 81000, fuel: "diesel", gearbox: "auto", engine: "2.2", priceXof: 12600000, status: "incheon", body: "suv", vin: "DEMO-KNDS81-055" },
+  { id: "BY-PRT-20-031", make: "Hyundai", model: "Porter II", year: 2020, km: 64000, fuel: "diesel", gearbox: "manual", engine: "2.5", priceXof: 8900000, status: "incheon", body: "utilitaire", vin: "DEMO-KMHF24-031" },
+  { id: "BY-TUC-21-133", make: "Hyundai", model: "Tucson", year: 2021, km: 39000, fuel: "diesel", gearbox: "auto", engine: "1.6", priceXof: 16800000, status: "sea", body: "suv", vin: "DEMO-KMHJ81-133" },
+  { id: "BY-AVA-19-221", make: "Hyundai", model: "Avante", year: 2019, km: 61000, fuel: "petrol", gearbox: "auto", engine: "1.6", priceXof: 7900000, status: "dakar", body: "berline", vin: "DEMO-KMHD84-221" },
+  { id: "BY-K5-20-164", make: "Kia", model: "K5", year: 2020, km: 52000, fuel: "petrol", gearbox: "auto", engine: "2.0", priceXof: 9800000, status: "sea", body: "berline", vin: "DEMO-KNAG34-164" },
+  { id: "BY-PRT-18-077", make: "Hyundai", model: "Porter II", year: 2018, km: 101000, fuel: "diesel", gearbox: "manual", engine: "2.5", priceXof: 7400000, status: "dakar", body: "utilitaire", vin: "DEMO-KMHF24-077" },
+  { id: "BY-SPO-20-044", make: "Kia", model: "Sportage", year: 2020, km: 47000, fuel: "petrol", gearbox: "auto", engine: "1.6", priceXof: 14100000, status: "dakar", body: "suv", vin: "DEMO-KNDP81-044" },
+  { id: "BY-SFE-19-009", make: "Hyundai", model: "Santa Fe", year: 2019, km: 70000, fuel: "diesel", gearbox: "auto", engine: "2.2", priceXof: 13900000, status: "incheon", body: "suv", vin: "DEMO-KMHS81-009" },
+  { id: "BY-SOR-21-012", make: "Kia", model: "Sorento", year: 2021, km: 28000, fuel: "diesel", gearbox: "auto", engine: "2.2", priceXof: 18500000, status: "sea", body: "suv", vin: "DEMO-KNDS81-012" }
+];
+/* priceXof = sample Prix port / Hors douane. Clé en main = priceXof * (1+CUSTOMS_RATE) as an ESTIMATE only. */
+
+const SIM_MODELS = [
+  { id: "Tucson", minYear: 2017, maxYear: 2021, min: 11000000, max: 18000000, days: 45 },
+  { id: "Sportage", minYear: 2017, maxYear: 2021, min: 12000000, max: 16500000, days: 45 },
+  { id: "Santa Fe", minYear: 2017, maxYear: 2021, min: 13000000, max: 19000000, days: 50 },
+  { id: "Sorento", minYear: 2017, maxYear: 2021, min: 14000000, max: 20000000, days: 50 },
+  { id: "Porter II", minYear: 2018, maxYear: 2021, min: 7000000, max: 11000000, days: 40 },
+  { id: "Avante", minYear: 2017, maxYear: 2021, min: 6500000, max: 9500000, days: 40 },
+  { id: "K5", minYear: 2018, maxYear: 2021, min: 8500000, max: 12000000, days: 45 }
+];
+/* SIM_MODELS brackets and ~days to Port de Dakar are DEMO estimates, not quotes. */
+
+const ZONE_FEES = { dakar: 0, aibd: 15000, regions: 40000 }; // DEMO zone supplements, XOF, not confirmed
+
 const STORAGE_KEY = "boylo-demo-listings";
 
 const RENTALS = [
-  { id: "VDN-MRN-01", name: "Kia Morning", year: 2021, daily: 25000, booked: [] },
-  { id: "VDN-TUC-02", name: "Hyundai Tucson", year: 2019, daily: 55000, booked: [{ start: "2026-12-01", end: "2026-12-08" }] },
-  { id: "VDN-STX-03", name: "Hyundai Grand Starex", year: 2018, daily: 70000, booked: [{ start: "2026-11-08", end: "2026-11-22" }] },
-  { id: "VDN-SPT-04", name: "Kia Sportage", year: 2020, daily: 55000, booked: [] }
+  { id: "VDN-MRN-01", name: "Kia Morning", year: 2021, km: 28000, fuel: "petrol", gearbox: "auto", engine: "1.0", daily: 25000, weekly: 150000, booked: [] },
+  { id: "VDN-TUC-02", name: "Hyundai Tucson", year: 2019, km: 54000, fuel: "diesel", gearbox: "auto", engine: "2.0", daily: 55000, weekly: 330000, booked: [{ start: "2026-12-01", end: "2026-12-08" }] },
+  { id: "VDN-STX-03", name: "Hyundai Grand Starex", year: 2018, km: 98000, fuel: "diesel", gearbox: "auto", engine: "2.5", daily: 70000, weekly: 420000, booked: [{ start: "2026-11-08", end: "2026-11-22" }] },
+  { id: "VDN-SPT-04", name: "Kia Sportage", year: 2020, km: 41000, fuel: "petrol", gearbox: "auto", engine: "1.6", daily: 55000, weekly: 330000, booked: [] }
 ];
+/* Rental rates, booked dates and zone fees are SAMPLE / DEMO only. */
 
 const TRACKS = {
-  "BY-CNT-441": { car: "Hyundai Tucson 2021", step: 4 },
-  "BY-CNT-218": { car: "Kia Sportage 2019", step: 3 },
-  "BY-CNT-090": { car: "Kia Sorento 2021", step: 1 }
+  "BY-CNT-441": { car: "Hyundai Tucson 2021", step: 4, ship: "MSC" },
+  "BY-CNT-218": { car: "Kia Sportage 2019", step: 3, ship: "MSC" },
+  "BY-CNT-090": { car: "Kia Sorento 2021", step: 1, ship: "—" }
 };
 
-const REQUESTS = [
-  { ref: "DEM-104", vehicle: "Tucson 2018", status: "pending" },
-  { ref: "DEM-105", vehicle: "Porter II 2020", status: "received" },
-  { ref: "DEM-106", vehicle: "Sportage 2020", status: "pending" }
+const DEPOSITS = [
+  { ref: "DEP-104", vehicle: "Tucson 2018", amount: 3540000, status: "pending" },
+  { ref: "DEP-105", vehicle: "Porter II 2020", amount: 2670000, status: "simulated" },
+  { ref: "DEP-106", vehicle: "Sportage 2020", amount: 4230000, status: "pending" }
 ];
 
 const MESSAGES = [
-  { side: "fr", text: "Le Tucson BY-TUC-18-041 : client intéressé, merci de confirmer la disponibilité." },
-  { side: "kr", text: "BY-TUC-18-041 투싼, 인천 재고 상태 확인 부탁드립니다." },
+  { side: "fr", text: "Le Tucson BY-TUC-18-041 : acompte 30 %, en attente de confirmation." },
+  { side: "kr", text: "BY-TUC-18-041 투싼, 계약금 30%. 인천 재고 상태 확인 부탁드립니다." },
   { side: "fr", text: "Merci. On envoie le suivi BY-CNT-218 une fois le chargement confirmé." },
   { side: "kr", text: "부산 선적 일정 확인되는 대로 공유하겠습니다." }
+];
+
+const MARGINS = [
+  { label: "KRW", buy: "₩ 18 400 000", note: "achat" },
+  { label: "USD", mid: "$ 12 400", note: "contre-valeur" },
+  { label: "XOF", sell: "7 440 000 F", note: "vente" }
 ];
 
 const I18N = {
   fr: {
     skip: "Aller au contenu", logoAria: "BOYLOTRADING, accueil",
     navImport: "Import Corée", navRental: "Location VDN 24/7", navTrack: "Suivi Conteneur",
-    simNav: "Commande Corée", navSupply: "Fournisseurs",
-    ctaRent: "Louer sur la VDN", ctaStock: "Voir le stock",
-    openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu", close: "Fermer",
-    modeClient: "Client", modeAdmin: "Admin",
+    ctaStock: "Explorer le Stock Corée", ctaRent: "Louer sur la VDN",
+    openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu",
+    modeClient: "Mode Client", modeAdmin: "Cockpit Admin",
     heroTitle: "Votre véhicule importé de Corée ou loué sur la VDN en 2 clics",
     heroSub: "Stock Corée visible par statut. Location au 7 VDN, Ouest Foire, jour et nuit.",
-    featPrice: "Clé en main Dakar",
     calcTitle: "Coût rendu & acompte",
+    calcHint: "",
     calcTier: "Catégorie du véhicule",
-    calcCif: "CIF Dakar",
-    calcCustoms: "Douane",
-    calcLanded: "Coût rendu estimé",
+    calcCif: "CIF Dakar", calcCustoms: "Douane", calcLanded: "Coût rendu estimé",
     calcDeposit: "Acompte 30 %",
-    tierCity: "Citadine (Avante, K5)",
+    calcDisclaimer: "",
+    demoBadge: "",
+    tierCity: "Citadine (ex. Avante, K5 entrée)",
     tierSuvc: "SUV compact (Tucson, Sportage)",
     tierSuvl: "SUV (Santa Fe, Sorento)",
     tierUtil: "Utilitaire (Porter II)",
-    stockTitle: "Stock Corée", search: "Recherche", searchPh: "Tucson, Porter II…",
-    budgetLabel: "Budget max (CFA)", budgetAll: "Tous les budgets",
-    budget1: "15 000 000", budget2: "20 000 000", budget3: "25 000 000", budget4: "30 000 000",
+    stockTitle: "Stock Corée",
+    stockLead: "",
     filterAll: "Tous", stIncheon: "En stock Incheon", stSea: "En mer", stDakar: "Arrivé Port de Dakar",
     bodySedan: "Berline", bodyUtil: "Utilitaire",
-    resultsCount: "{n} véhicules", emptyTitle: "Aucune voiture ne correspond",
-    emptyText: "Élargissez la recherche ou réinitialisez les filtres.", reset: "Réinitialiser les filtres",
-    waGreen: "WhatsApp",
-    simTitle: "Commander depuis la Corée",
-    simLead: "Choisissez un modèle et un budget. Nous vous répondons sur WhatsApp.",
-    simModel: "Modèle", simBudget: "Budget (FCFA)", simSend: "Demander sur WhatsApp",
+    search: "Recherche", searchPh: "Tucson, Porter II…", budgetLabel: "Budget max (CFA)", currency: "Devise",
+    budgetAll: "Sans plafond", budget1: "8 000 000", budget2: "12 000 000", budget3: "16 000 000", budget4: "20 000 000",
+    fxNote: "",
+    resultsCount: "{n} véhicule(s)",
+    fuelDiesel: "Diesel", fuelPetrol: "Essence", gearboxAuto: "Auto", gearboxManual: "Manuelle",
+    waCar: "WhatsApp pour cette voiture",
+    depositCta: "Bloquer avec 30 % d'acompte",
+    emptyTitle: "Aucune voiture ne correspond", emptyText: "Élargissez la recherche ou réinitialisez les filtres.",
+    reset: "Réinitialiser les filtres",
     rentalTitle: "Location VDN 24/7",
-    rentalLead: "Bureau au 7 VDN, Ouest Foire, Dakar. Ouvert jour et nuit.",
-    rentDates: "Dates et zone", rentStart: "Début", rentEnd: "Retour", rentZone: "Zone",
-    zoneDakar: "Dakar centre", zoneAibd: "AIBD Aéroport", zoneRegions: "Régions",
-    rentNeedDates: "Choisissez vos dates.", daysN: "{n} jour(s)", rentTotal: "Total",
-    rentBooked: "Loué — Disponible le {date}", rentBlocked: "Indisponible sur ces dates. Disponible le {date}.",
-    available: "Disponible", perDay: "/ jour", rentBook: "Réserver",
+    rentalLead: "Bureau au 7 VDN, Ouest Foire, Dakar (PGWJ+382). Ouvert jour et nuit.",
+    available: "Disponible", unavailable: "Indisponible",
+    perDay: "/ jour", perWeek: "/ semaine",
+    waRent: "Réserver sur WhatsApp", inspOpen: "État des lieux & pièce d'identité",
     trackTitle: "Suivi conteneur",
     trackLead: "Suivez votre dossier de Incheon au Port de Dakar.",
-    cIncheon: "Préparation et stock Corée", cBusan: "Chargement RoRo", cTanger: "Escale", cDakar: "Arrivée à Dakar",
+    cIncheon: "Préparation et stock Corée", cBusan: "Chargement RoRo", cTanger: "Escale", cDakar: "Arrivée et douane",
     trackLabel: "Référence de suivi", trackSubmit: "Suivre",
+    trackHint: "",
     trackUnknown: "Référence introuvable.",
-    corridorSteps: ["Incheon", "Busan", "Tanger Med", "Port Autonome de Dakar"],
+    trackSample: "",
+    trackShip: "Navire",
     done: "Terminé", current: "En cours", upcoming: "À venir",
-    trustTitle: "Boylo Trading", trustCorridorTitle: "Corridor de route",
+    corridorSteps: ["Incheon", "Busan", "Tanger Med", "Port Autonome de Dakar"],
+    trustTitle: "Ce que vous pouvez vérifier",
+    trustCorridorTitle: "Corridor de route",
     trustCorridor: "Incheon → Busan → Tanger Med → Port Autonome de Dakar.",
-    trustDeskTitle: "Bureau 24/7", trustDesk: "Location au 7 VDN, Ouest Foire, Dakar. Ouvert jour et nuit.",
-    trustInspTitle: "Inspection", trustInsp: "Inspection avant expédition, et état des lieux à la location.",
+    trustDeskTitle: "Bureau 24/7",
+    trustDesk: "Location au 7 VDN, Ouest Foire, Dakar. Ouvert jour et nuit.",
+    trustInspTitle: "Inspection",
+    trustInsp: "Inspection avant expédition, et état des lieux à la location.",
     leadTitle: "Conciergerie WhatsApp",
     leadText: "Écrivez-nous pour un véhicule, une location ou une commande.",
-    waLaunch: "Écrire sur WhatsApp", yourName: "Nom", phoneWa: "Téléphone / WhatsApp",
-    interest: "Intérêt", interestBuy: "Import / achat", interestRent: "Location VDN", interestSupply: "Fourniture (Corée)",
-    leadSend: "Envoyer", leadMissing: "Indiquez votre nom et votre téléphone.",
+    waLaunch: "Écrire sur WhatsApp",
+    yourName: "Nom", phoneWa: "Téléphone / WhatsApp", interest: "Intérêt",
+    interestBuy: "Import / achat", interestRent: "Location VDN", interestSupply: "Fourniture (Corée)",
+    leadSend: "Envoyer", leadMissing: "Indiquez un nom et un numéro.",
     leadSuccess: "Demande envoyée",
-    supplyTitle: "Fournisseurs en Corée",
-    supplyLead: "Vous êtes fournisseur ou exportateur en Corée ? Proposez-nous un véhicule.",
-    supplyWa: "Écrire sur WhatsApp",
-    adminTitle: "Admin", quickAdd: "Ajout rapide",
-    qaPhoto: "Photo", qaMake: "Marque", qaModel: "Modèle", qaYear: "Année", qaKm: "Kilométrage",
-    qaBody: "Carrosserie", qaStatus: "Statut", qaPrice: "Prix clé en main Dakar (FCFA)",
-    qaPublish: "Publier dans le showroom", qaNeed: "Renseignez la marque, le modèle, l'année et le prix.",
-    qaOk: "Fiche publiée.",
-    adminDeposits: "Demandes", colRef: "Réf.", colVehicle: "Véhicule", colStatus: "Statut",
-    stPending: "En attente", stOk: "Reçue", adminFeed: "Conciergerie FR ⇄ KR",
     footAbout: "Import Corée vers le Sénégal, location au 7 VDN, Ouest Foire.",
     footStatus: "Bureau ouvert 24/7", footLocation: "Location", footContact: "Contact",
-    okTitle: "Demande envoyée", okClose: "Fermer"
+    adminTitle: "Cockpit admin",
+    adminLead: "Acomptes, messages et marges.",
+    adminDeposits: "Acomptes", adminFeed: "Conciergerie FR ⇄ KR", adminFeedHint: "",
+    colRef: "Réf.", colVehicle: "Véhicule", colAmount: "Acompte", colStatus: "Statut",
+    stPending: "En attente", stSim: "Reçu",
+    marginTitle: "Suivi de marge KRW / USD / XOF",
+    depositTitle: "Bloquer avec 30 % d'acompte",
+    depositSim: "",
+    payMethod: "Moyen de paiement", payWire: "Virement", simPay: "Confirmer le paiement",
+    receiptTitle: "Reçu", close: "Fermer",
+    inspTitle: "État des lieux & pièce d'identité",
+    inspLead: "",
+    idNumber: "N° pièce d'identité", license: "Permis", inspChecks: "Contrôles visuels",
+    chkLights: "Feux", chkBody: "Carrosserie", chkFuel: "Niveau de carburant",
+    inspSubmit: "Enregistrer la fiche", inspOk: "Fiche enregistrée.",
+    inspMissing: "Nom, pièce, permis et téléphone sont requis.",
+    priceOf: "Prix affiché", depositOf: "Acompte 30 %",
+    priceCle: "Dédouané / Clé en main Dakar",
+    pricePort: "Prix port / Hors douane",
+    priceModeHint: "",
+    filterFuel: "Carburant",
+    engine: "Moteur",
+    share: "Partager le lien",
+    shareCopied: "Lien copié.",
+    waGreen: "WhatsApp",
+    simNav: "Simulateur",
+    simTitle: "Simulateur Commande Corée",
+    simLead: "Indiquez le modèle, les années et votre budget.",
+    simStep1: "Modèle et années",
+    simStep2: "Budget cible",
+    simStep3: "Résultat",
+    simModel: "Modèle",
+    simYearFrom: "Année min.",
+    simYearTo: "Année max.",
+    simBudget: "Budget (FCFA)",
+    simNext: "Continuer",
+    simBack: "Retour",
+    simSee: "Voir le résultat",
+    simBracket: "Fourchette clé en main",
+    simTime: "Délai jusqu'au Port de Dakar : ~{n} jours.",
+    simOk: "Ce budget entre dans la fourchette pour ce modèle.",
+    simTight: "Ce budget est serré pour ce modèle et ces années. Une fourchette plus adaptée serait {min} – {max} FCFA.",
+    simHigh: "Ce budget dépasse la fourchette habituelle. On peut viser un millésime plus récent ou un niveau de finition supérieur.",
+    simDemo: "",
+    rentDates: "Dates et zone",
+    rentStart: "Début",
+    rentEnd: "Retour",
+    rentZone: "Zone",
+    zoneDakar: "Dakar centre",
+    zoneAibd: "AIBD Aéroport",
+    zoneRegions: "Régions",
+    zoneHint: "",
+    rentTotal: "Total",
+    rentDeposit: "Acompte (1 jour)",
+    rentNeedDates: "Choisissez une date de début et un retour (le retour doit être le jour du départ ou après).",
+    rentBooked: "Loué — Disponible le {date}",
+    rentBlocked: "Ces dates se chevauchent avec une réservation. Prochaine disponibilité : {date}.",
+    daysN: "{n} jour(s)",
+    quickAdd: "Ajout rapide",
+    quickLead: "Ajoutez une fiche au stock depuis le téléphone.",
+    qaPhoto: "Photo",
+    qaMake: "Marque",
+    qaModel: "Modèle",
+    qaYear: "Année",
+    qaKm: "Kilométrage",
+    qaEngine: "Cylindrée",
+    qaPrice: "Prix d'achat",
+    qaPriceCur: "Devise du prix",
+    qaMargin: "Marge % (modifiable)",
+    qaFcfa: "Prix port (FCFA)",
+    qaPublish: "Publier dans le showroom",
+    qaNeed: "Marque, modèle, année et prix sont requis.",
+    qaOk: "Fiche publiée dans le stock.",
+    carouselPrev: "Précédent", carouselNext: "Suivant"
+
   },
   en: {
     skip: "Skip to content", logoAria: "BOYLOTRADING, home",
     navImport: "Korea import", navRental: "VDN rental 24/7", navTrack: "Container tracking",
-    simNav: "Order from Korea", navSupply: "Suppliers",
-    ctaRent: "Rent on the VDN", ctaStock: "See stock",
-    openMenu: "Open menu", closeMenu: "Close menu", close: "Close",
-    modeClient: "Client", modeAdmin: "Admin",
-    heroTitle: "Your vehicle imported from Korea or rented on the VDN in 2 taps",
+    ctaStock: "Browse Korea stock", ctaRent: "Rent on the VDN",
+    openMenu: "Open menu", closeMenu: "Close menu",
+    modeClient: "Client mode", modeAdmin: "Admin cockpit",
+    heroTitle: "Your Korea-imported car or a VDN rental, in two clicks",
     heroSub: "Korea stock by status. Rentals at 7 VDN, Ouest Foire, day and night.",
-    featPrice: "Turn-key Dakar",
     calcTitle: "Landed cost & deposit",
-    calcTier: "Vehicle type",
-    calcCif: "CIF Dakar",
-    calcCustoms: "Customs",
-    calcLanded: "Estimated landed cost",
+    calcHint: "",
+    calcTier: "Vehicle tier",
+    calcCif: "CIF Dakar", calcCustoms: "Customs", calcLanded: "Estimated landed cost",
     calcDeposit: "30% deposit",
-    tierCity: "City car (Avante, K5)",
+    calcDisclaimer: "",
+    demoBadge: "",
+    tierCity: "City / sedan entry (e.g. Avante, K5)",
     tierSuvc: "Compact SUV (Tucson, Sportage)",
     tierSuvl: "SUV (Santa Fe, Sorento)",
     tierUtil: "Utility (Porter II)",
-    stockTitle: "Korea stock", search: "Search", searchPh: "Tucson, Porter II…",
-    budgetLabel: "Max budget (CFA)", budgetAll: "All budgets",
-    budget1: "15,000,000", budget2: "20,000,000", budget3: "25,000,000", budget4: "30,000,000",
-    filterAll: "All", stIncheon: "In stock Incheon", stSea: "At sea", stDakar: "Arrived Port of Dakar",
+    stockTitle: "Korea stock",
+    stockLead: "",
+    filterAll: "All", stIncheon: "In stock, Incheon", stSea: "At sea", stDakar: "Arrived, Port of Dakar",
     bodySedan: "Sedan", bodyUtil: "Utility",
-    resultsCount: "{n} vehicles", emptyTitle: "No matching cars",
-    emptyText: "Widen the search or reset the filters.", reset: "Reset filters",
-    waGreen: "WhatsApp",
-    simTitle: "Order from Korea",
-    simLead: "Choose a model and a budget. We reply on WhatsApp.",
-    simModel: "Model", simBudget: "Budget (FCFA)", simSend: "Request on WhatsApp",
+    search: "Search", searchPh: "Tucson, Porter II…", budgetLabel: "Max budget (CFA)", currency: "Currency",
+    budgetAll: "No cap", budget1: "8,000,000", budget2: "12,000,000", budget3: "16,000,000", budget4: "20,000,000",
+    fxNote: "",
+    resultsCount: "{n} vehicle(s)",
+    fuelDiesel: "Diesel", fuelPetrol: "Petrol", gearboxAuto: "Auto", gearboxManual: "Manual",
+    waCar: "WhatsApp about this car",
+    depositCta: "Hold with a 30% deposit",
+    emptyTitle: "No cars match", emptyText: "Widen the search or reset the filters.",
+    reset: "Reset filters",
     rentalTitle: "VDN rental 24/7",
-    rentalLead: "Desk at 7 VDN, Ouest Foire, Dakar. Open day and night.",
-    rentDates: "Dates and zone", rentStart: "Start", rentEnd: "Return", rentZone: "Zone",
-    zoneDakar: "Dakar centre", zoneAibd: "AIBD Airport", zoneRegions: "Regions",
-    rentNeedDates: "Choose your dates.", daysN: "{n} day(s)", rentTotal: "Total",
-    rentBooked: "Rented — Available {date}", rentBlocked: "Unavailable on these dates. Available {date}.",
-    available: "Available", perDay: "/ day", rentBook: "Book",
+    rentalLead: "Desk at 7 VDN, Ouest Foire, Dakar (PGWJ+382). Open day and night.",
+    available: "Available", unavailable: "Unavailable",
+    perDay: "/ day", perWeek: "/ week",
+    waRent: "Book on WhatsApp", inspOpen: "Inspection & ID intake",
     trackTitle: "Container tracking",
     trackLead: "Track your shipment from Incheon to the Port of Dakar.",
-    cIncheon: "Prep and Korea stock", cBusan: "RoRo loading", cTanger: "Call", cDakar: "Arrival in Dakar",
+    cIncheon: "Prep and Korea stock", cBusan: "RoRo loading", cTanger: "Call", cDakar: "Arrival and customs",
     trackLabel: "Tracking reference", trackSubmit: "Track",
+    trackHint: "",
     trackUnknown: "Reference not found.",
+    trackSample: "",
+    trackShip: "Vessel",
+    done: "Done", current: "In progress", upcoming: "Upcoming",
     corridorSteps: ["Incheon", "Busan", "Tanger Med", "Port Autonome de Dakar"],
-    done: "Done", current: "Current", upcoming: "Upcoming",
-    trustTitle: "Boylo Trading", trustCorridorTitle: "Shipping corridor",
+    trustTitle: "What you can verify",
+    trustCorridorTitle: "Shipping corridor",
     trustCorridor: "Incheon → Busan → Tanger Med → Port Autonome de Dakar.",
-    trustDeskTitle: "24/7 desk", trustDesk: "Rentals at 7 VDN, Ouest Foire, Dakar. Open day and night.",
-    trustInspTitle: "Inspection", trustInsp: "Inspection before shipping, and a check-in on rental.",
+    trustDeskTitle: "24/7 desk",
+    trustDesk: "Rentals at 7 VDN, Ouest Foire, Dakar. Open day and night.",
+    trustInspTitle: "Inspection",
+    trustInsp: "Inspection before shipping, and a check-in on rental.",
     leadTitle: "WhatsApp concierge",
     leadText: "Write to us about a vehicle, a rental or an order.",
-    waLaunch: "Message on WhatsApp", yourName: "Name", phoneWa: "Phone / WhatsApp",
-    interest: "Interest", interestBuy: "Import / purchase", interestRent: "VDN rental", interestSupply: "Supply (Korea)",
-    leadSend: "Send", leadMissing: "Please add your name and phone number.",
+    waLaunch: "Write on WhatsApp",
+    yourName: "Name", phoneWa: "Phone / WhatsApp", interest: "Interest",
+    interestBuy: "Import / buy", interestRent: "VDN rental", interestSupply: "Supply (Korea)",
+    leadSend: "Send", leadMissing: "Add a name and a number.",
     leadSuccess: "Request sent",
-    supplyTitle: "Suppliers in Korea",
-    supplyLead: "Are you a supplier or exporter in Korea? Offer us a vehicle.",
-    supplyWa: "Message on WhatsApp",
-    adminTitle: "Admin", quickAdd: "Quick add",
-    qaPhoto: "Photo", qaMake: "Make", qaModel: "Model", qaYear: "Year", qaKm: "Mileage",
-    qaBody: "Body", qaStatus: "Status", qaPrice: "Turn-key Dakar price (FCFA)",
-    qaPublish: "Publish to showroom", qaNeed: "Please add make, model, year and price.",
-    qaOk: "Listing published.",
-    adminDeposits: "Requests", colRef: "Ref.", colVehicle: "Vehicle", colStatus: "Status",
-    stPending: "Pending", stOk: "Received", adminFeed: "Concierge FR ⇄ KR",
-    footAbout: "Korea-to-Senegal import, rentals at 7 VDN, Ouest Foire.",
-    footStatus: "Desk open 24/7", footLocation: "Rentals", footContact: "Contact",
-    okTitle: "Request sent", okClose: "Close"
+    footAbout: "Korea-to-Senegal import, rental at 7 VDN, Ouest Foire.",
+    footStatus: "Desk open 24/7", footLocation: "Rental", footContact: "Contact",
+    adminTitle: "Admin cockpit",
+    adminLead: "Deposits, messages and margins.",
+    adminDeposits: "Deposits", adminFeed: "Concierge FR ⇄ KR", adminFeedHint: "",
+    colRef: "Ref.", colVehicle: "Vehicle", colAmount: "Deposit", colStatus: "Status",
+    stPending: "Pending", stSim: "Received",
+    marginTitle: "KRW / USD / XOF margin tracker",
+    depositTitle: "Hold with a 30% deposit",
+    depositSim: "",
+    payMethod: "Payment method", payWire: "Bank transfer", simPay: "Confirm payment",
+    receiptTitle: "Receipt", close: "Close",
+    inspTitle: "Inspection & ID intake",
+    inspLead: "",
+    idNumber: "ID number", license: "Licence", inspChecks: "Visual checks",
+    chkLights: "Lights", chkBody: "Bodywork", chkFuel: "Fuel level",
+    inspSubmit: "Save sheet", inspOk: "Sheet saved.",
+    inspMissing: "Name, ID, licence and phone are required.",
+    priceOf: "Listed price", depositOf: "30% deposit",
+    priceCle: "Cleared / Turn-key Dakar", pricePort: "Port price / Ex-customs",
+    priceModeHint: "",
+    filterFuel: "Fuel",
+    engine: "Engine", share: "Share link", shareCopied: "Link copied.", waGreen: "WhatsApp",
+    simNav: "Simulator", simTitle: "Korea order simulator",
+    simLead: "Choose a model, years and your budget.",
+    simStep1: "Model and years", simStep2: "Target budget", simStep3: "Result",
+    simModel: "Model", simYearFrom: "Year from", simYearTo: "Year to", simBudget: "Budget (FCFA)",
+    simNext: "Continue", simBack: "Back", simSee: "See result",
+    simBracket: "Turn-key bracket",
+    simTime: "Time to the Port of Dakar: ~{n} days.",
+    simOk: "This budget sits in the bracket for this model.",
+    simTight: "This budget is tight for this model and these years. A better fit would be {min} – {max} FCFA.",
+    simHigh: "This budget is above the usual bracket. A newer year or higher trim may be possible.",
+    simDemo: "",
+    rentDates: "Dates and zone", rentStart: "Start", rentEnd: "Return", rentZone: "Zone",
+    zoneDakar: "Dakar centre", zoneAibd: "AIBD Airport", zoneRegions: "Regions",
+    zoneHint: "",
+    rentTotal: "Total", rentDeposit: "Deposit (1 day)",
+    rentNeedDates: "Pick a start and a return on or after the start date.",
+    rentBooked: "Rented — Available on {date}",
+    rentBlocked: "These dates overlap a booking. Next availability: {date}.",
+    daysN: "{n} day(s)",
+    quickAdd: "Quick add",
+    quickLead: "Add a listing to stock from your phone.",
+    qaPhoto: "Photo", qaMake: "Make", qaModel: "Model", qaYear: "Year", qaKm: "Mileage", qaEngine: "Engine",
+    qaPrice: "Purchase price", qaPriceCur: "Price currency", qaMargin: "Margin % (editable)",
+    qaFcfa: "Port price (FCFA)", qaPublish: "Publish to showroom",
+    qaNeed: "Make, model, year and price are required.",
+    qaOk: "Listing published to stock.",
+    carouselPrev: "Previous", carouselNext: "Next"
   },
   ko: {
     skip: "본문으로 건너뛰기", logoAria: "BOYLOTRADING 홈",
     navImport: "한국 수입", navRental: "VDN 렌탈 24/7", navTrack: "컨테이너 추적",
-    simNav: "한국 주문", navSupply: "공급사",
-    ctaRent: "VDN에서 렌트", ctaStock: "재고 보기",
-    openMenu: "메뉴 열기", closeMenu: "메뉴 닫기", close: "닫기",
-    modeClient: "고객", modeAdmin: "관리",
-    heroTitle: "한국에서 수입하거나 VDN에서 렌트, 두 번이면 됩니다",
-    heroSub: "상태별로 보는 한국 재고. 다카르 7 VDN, Ouest Foire에서 주야간 렌탈.",
-    featPrice: "다카르 인도 가격",
+    ctaStock: "한국 재고 보기", ctaRent: "VDN에서 렌트",
+    openMenu: "메뉴 열기", closeMenu: "메뉴 닫기",
+    modeClient: "고객 모드", modeAdmin: "관리자 콕핏",
+    heroTitle: "한국 수입 차량 또는 VDN 렌탈, 클릭 두 번이면 됩니다",
+    heroSub: "한국 재고는 상태별로 볼 수 있습니다. 다카르 7 VDN, Ouest Foire에서 주야간 렌탈.",
     calcTitle: "도착원가와 계약금",
-    calcTier: "차량 유형",
-    calcCif: "CIF 다카르",
-    calcCustoms: "관세",
-    calcLanded: "추정 도착원가",
+    calcHint: "",
+    calcTier: "차량 구간",
+    calcCif: "CIF 다카르", calcCustoms: "관세", calcLanded: "추정 도착원가",
     calcDeposit: "계약금 30%",
-    tierCity: "소형/세단 (아반떼, K5)",
+    calcDisclaimer: "",
+    demoBadge: "",
+    tierCity: "소형/세단 (아반떼, K5 등)",
     tierSuvc: "컴팩트 SUV (투싼, 스포티지)",
     tierSuvl: "SUV (싼타페, 쏘렌토)",
     tierUtil: "화물 (포터 II)",
-    stockTitle: "한국 재고", search: "검색", searchPh: "Tucson, Porter II…",
-    budgetLabel: "최대 예산 (CFA)", budgetAll: "모든 예산",
-    budget1: "15,000,000", budget2: "20,000,000", budget3: "25,000,000", budget4: "30,000,000",
+    stockTitle: "한국 재고",
+    stockLead: "",
     filterAll: "전체", stIncheon: "인천 재고", stSea: "해상 운송 중", stDakar: "다카르 항 도착",
-    bodySedan: "세단", bodyUtil: "상용",
-    resultsCount: "차량 {n}대", emptyTitle: "해당하는 차량이 없습니다",
-    emptyText: "검색을 넓히거나 필터를 초기화하세요.", reset: "필터 초기화",
-    waGreen: "WhatsApp",
-    simTitle: "한국에서 주문하기",
-    simLead: "모델과 예산을 선택하세요. WhatsApp으로 답변드립니다.",
-    simModel: "모델", simBudget: "예산 (FCFA)", simSend: "WhatsApp으로 문의",
+    bodySedan: "세단", bodyUtil: "화물/유틸리티",
+    search: "검색", searchPh: "투싼, 포터 II…", budgetLabel: "최대 예산 (CFA)", currency: "통화",
+    budgetAll: "제한 없음", budget1: "8,000,000", budget2: "12,000,000", budget3: "16,000,000", budget4: "20,000,000",
+    fxNote: "",
+    resultsCount: "차량 {n}대",
+    fuelDiesel: "디젤", fuelPetrol: "가솔린", gearboxAuto: "오토", gearboxManual: "수동",
+    waCar: "이 차량 WhatsApp 문의",
+    depositCta: "계약금 30%로 예약",
+    emptyTitle: "해당하는 차량이 없습니다", emptyText: "검색을 넓히거나 필터를 초기화하세요.",
+    reset: "필터 초기화",
     rentalTitle: "VDN 렌탈 24/7",
-    rentalLead: "다카르 7 VDN, Ouest Foire. 주야간 운영.",
-    rentDates: "날짜와 구역", rentStart: "시작", rentEnd: "반납", rentZone: "구역",
-    zoneDakar: "다카르 시내", zoneAibd: "AIBD 공항", zoneRegions: "지방",
-    rentNeedDates: "날짜를 선택하세요.", daysN: "{n}일", rentTotal: "합계",
-    rentBooked: "대여 중 — {date}부터 가능", rentBlocked: "해당 날짜는 불가합니다. {date}부터 가능.",
-    available: "가능", perDay: "/ 일", rentBook: "예약",
+    rentalLead: "다카르 7 VDN, Ouest Foire (PGWJ+382). 주야간 운영.",
+    available: "예약 가능", unavailable: "예약 불가",
+    perDay: "/일", perWeek: "/주",
+    waRent: "WhatsApp으로 예약", inspOpen: "점검 및 신분증 접수",
     trackTitle: "컨테이너 추적",
     trackLead: "인천에서 다카르 항까지 화물을 추적하세요.",
-    cIncheon: "준비 및 한국 재고", cBusan: "RoRo 선적", cTanger: "기항", cDakar: "다카르 도착",
+    cIncheon: "한국 재고 준비", cBusan: "RoRo 선적", cTanger: "기항", cDakar: "도착 및 통관",
     trackLabel: "추적 번호", trackSubmit: "조회",
+    trackHint: "",
     trackUnknown: "번호를 찾을 수 없습니다.",
-    corridorSteps: ["인천", "부산", "탄헤르메드", "다카르 자치항"],
+    trackSample: "",
+    trackShip: "선박",
     done: "완료", current: "진행 중", upcoming: "예정",
-    trustTitle: "Boylo Trading", trustCorridorTitle: "운송 경로",
+    corridorSteps: ["인천", "부산", "탄헤르메드", "다카르 자치항"],
+    trustTitle: "확인할 수 있는 내용",
+    trustCorridorTitle: "운송 항로",
     trustCorridor: "인천 → 부산 → 탄헤르메드 → 다카르 자치항.",
-    trustDeskTitle: "24/7 데스크", trustDesk: "다카르 7 VDN, Ouest Foire 렌탈. 주야간 운영.",
-    trustInspTitle: "점검", trustInsp: "선적 전 점검, 렌탈 시 상태 확인.",
+    trustDeskTitle: "24/7 데스크",
+    trustDesk: "다카르 7 VDN, Ouest Foire 렌탈. 주야간 운영.",
+    trustInspTitle: "점검",
+    trustInsp: "선적 전 점검과 렌탈 시 상태 확인.",
     leadTitle: "WhatsApp 컨시어지",
     leadText: "차량, 렌탈 또는 주문 문의는 메시지로 보내 주세요.",
-    waLaunch: "WhatsApp으로 쓰기", yourName: "이름", phoneWa: "전화 / WhatsApp",
-    interest: "문의 유형", interestBuy: "수입 / 구매", interestRent: "VDN 렌탈", interestSupply: "공급 (한국)",
-    leadSend: "보내기", leadMissing: "이름과 전화번호를 입력해 주세요.",
+    waLaunch: "WhatsApp으로 쓰기",
+    yourName: "이름", phoneWa: "전화 / WhatsApp", interest: "관심사",
+    interestBuy: "수입 / 구매", interestRent: "VDN 렌탈", interestSupply: "공급 (한국)",
+    leadSend: "보내기", leadMissing: "이름과 번호를 입력해 주세요.",
     leadSuccess: "요청이 전송되었습니다",
-    supplyTitle: "한국 공급사",
-    supplyLead: "한국 공급사 또는 수출업체이신가요? 차량을 제안해 주세요.",
-    supplyWa: "WhatsApp으로 쓰기",
-    adminTitle: "관리", quickAdd: "빠른 추가",
-    qaPhoto: "사진", qaMake: "브랜드", qaModel: "모델", qaYear: "연식", qaKm: "주행거리",
-    qaBody: "차체", qaStatus: "상태", qaPrice: "다카르 인도 가격 (FCFA)",
-    qaPublish: "쇼룸에 게시", qaNeed: "브랜드, 모델, 연식, 가격을 입력해 주세요.",
-    qaOk: "등록되었습니다.",
-    adminDeposits: "요청", colRef: "번호", colVehicle: "차량", colStatus: "상태",
-    stPending: "대기", stOk: "수신", adminFeed: "컨시어지 FR ⇄ KR",
-    footAbout: "한국에서 세네갈로 수입, 7 VDN, Ouest Foire 렌탈.",
-    footStatus: "24/7 운영", footLocation: "렌탈", footContact: "연락처",
-    okTitle: "요청이 전송되었습니다", okClose: "닫기"
+    footAbout: "한국에서 세네갈로 수입, 7 VDN Ouest Foire 렌탈.",
+    footStatus: "데스크 24/7 운영", footLocation: "렌탈", footContact: "연락처",
+    adminTitle: "관리자 콕핏",
+    adminLead: "계약금, 메시지, 마진.",
+    adminDeposits: "계약금", adminFeed: "컨시어지 FR ⇄ KR", adminFeedHint: "",
+    colRef: "번호", colVehicle: "차량", colAmount: "계약금", colStatus: "상태",
+    stPending: "대기", stSim: "수신",
+    marginTitle: "KRW / USD / XOF 마진 추적",
+    depositTitle: "계약금 30%로 예약",
+    depositSim: "",
+    payMethod: "결제 수단", payWire: "계좌이체", simPay: "결제 확인",
+    receiptTitle: "영수증", close: "닫기",
+    inspTitle: "점검 및 신분증 접수",
+    inspLead: "",
+    idNumber: "신분증 번호", license: "운전면허", inspChecks: "육안 점검",
+    chkLights: "등화", chkBody: "차체", chkFuel: "연료량",
+    inspSubmit: "시트 저장", inspOk: "저장되었습니다.",
+    inspMissing: "이름, 신분증, 면허, 전화가 필요합니다.",
+    priceOf: "표시 가격", depositOf: "계약금 30%",
+    priceCle: "통관 완료 / 다카르 인도", pricePort: "항만 가격 / 미통관",
+    priceModeHint: "",
+    filterFuel: "연료",
+    engine: "배기량", share: "링크 공유", shareCopied: "링크가 복사되었습니다.", waGreen: "WhatsApp",
+    simNav: "시뮬레이터", simTitle: "한국 주문 시뮬레이터",
+    simLead: "모델, 연식, 예산을 입력하세요.",
+    simStep1: "모델과 연식", simStep2: "목표 예산", simStep3: "결과",
+    simModel: "모델", simYearFrom: "최소 연식", simYearTo: "최대 연식", simBudget: "예산 (FCFA)",
+    simNext: "계속", simBack: "뒤로", simSee: "결과 보기",
+    simBracket: "인도 가격 범위",
+    simTime: "다카르 항까지 기간: 약 {n}일.",
+    simOk: "이 예산은 해당 모델의 범위 안에 있습니다.",
+    simTight: "이 예산은 해당 모델·연식에 빠듯합니다. 보다 적합한 범위는 {min} – {max} FCFA입니다.",
+    simHigh: "이 예산은 일반 범위보다 높습니다. 더 새로운 연식이나 상위 트림이 가능할 수 있습니다.",
+    simDemo: "",
+    rentDates: "날짜와 구역", rentStart: "시작", rentEnd: "반납", rentZone: "구역",
+    zoneDakar: "다카르 시내", zoneAibd: "AIBD 공항", zoneRegions: "지방",
+    zoneHint: "",
+    rentTotal: "합계", rentDeposit: "계약금 (1일)",
+    rentNeedDates: "시작일과 그 이후의 반납일을 선택하세요.",
+    rentBooked: "대여 중 — {date}부터 가능",
+    rentBlocked: "선택한 날짜가 기존 예약과 겹칩니다. 다음 가능일: {date}.",
+    daysN: "{n}일",
+    quickAdd: "빠른 추가",
+    quickLead: "휴대폰에서 재고 카드를 추가하세요.",
+    qaPhoto: "사진", qaMake: "브랜드", qaModel: "모델", qaYear: "연식", qaKm: "주행거리", qaEngine: "배기량",
+    qaPrice: "매입가", qaPriceCur: "가격 통화", qaMargin: "마진 % (수정 가능)",
+    qaFcfa: "항구 가격 (FCFA)", qaPublish: "쇼룸에 게시",
+    qaNeed: "브랜드, 모델, 연식, 가격이 필요합니다.",
+    qaOk: "재고에 게시되었습니다.",
+    carouselPrev: "이전", carouselNext: "다음"
   }
 };
 
 let lang = "fr";
 let view = "client";
+let currency = "XOF";
 let statusFilter = "all";
 let bodyFilter = "all";
 let budgetMax = 0;
 let stockReady = false;
+let depositCar = null;
+let lastFocus = null;
+let priceMode = "cle"; // 'cle' = Dédouané / Clé en main, 'port' = Prix port / Hors douane
+let simStep = 1;
 let qaPhotoData = "";
 let extraCars = [];
 
 function t(key) {
   return (I18N[lang] && I18N[lang][key]) || I18N.fr[key] || key;
 }
+function toUsd(xof) { return xof / FX.USD_XOF; }
+function toKrw(xof) { return toUsd(xof) * FX.USD_KRW; }
 function money(xof) {
+  if (currency === "USD") return "$ " + toUsd(xof).toLocaleString("en-US", { maximumFractionDigits: 0 });
+  if (currency === "KRW") return "₩ " + Math.round(toKrw(xof)).toLocaleString("en-US");
   return Math.round(xof).toLocaleString("fr-FR") + " F CFA";
 }
 function fcfaPlain(xof) {
   return Math.round(xof).toLocaleString("fr-FR") + " FCFA";
+}
+function displayPrice(car) {
+  const port = Number(car.priceXof) || 0;
+  return priceMode === "cle" ? Math.round(port * (1 + CUSTOMS_RATE)) : port;
 }
 function allCars() { return CARS.concat(extraCars); }
 function loadExtra() {
@@ -776,49 +1073,28 @@ function nextFree(r) {
   const iso = today.toISOString().slice(0, 10);
   let latest = iso;
   (r.booked || []).forEach((b) => { if (b.end > latest && b.start <= iso && b.end > iso) latest = b.end; });
+  // if a booking covers today or we need the end of current booking
   (r.booked || []).forEach((b) => { if (iso >= b.start && iso < b.end && b.end > latest) latest = b.end; });
   return latest;
 }
 function icons() { if (window.lucide) lucide.createIcons(); }
-function waLink(text) {
-  return "https://wa.me/" + WHATSAPP.e164 + "?text=" + encodeURIComponent(text);
+function updatePriceModeBtns() {
+  document.querySelectorAll(".price-mode").forEach((b) => {
+    const on = b.getAttribute("data-mode") === priceMode;
+    b.classList.toggle("bg-accent", on);
+    b.classList.toggle("text-bg", on);
+    b.classList.toggle("text-mute", !on);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+  });
 }
 function waCarMessage(c) {
-  const price = fcfaPlain(c.priceXof);
+  const price = fcfaPlain(displayPrice(c));
   const name = c.make + " " + c.model + " " + c.year;
-  if (lang === "ko") return "안녕하세요 Boylo Trading, " + name + " (참조 " + c.id + ") 표시가 " + price + "인 차량에 관심이 있습니다. 아직 가능한지요?";
-  if (lang === "en") return "Hello Boylo Trading, I am interested in the " + name + " (Ref " + c.id + ") listed at " + price + ". Is it still available?";
-  return "Bonjour Boylo Trading, je suis intéressé par le " + name + " (Réf " + c.id + ") affiché à " + price + ". Est-il toujours disponible ?";
+  if (lang === "ko") return "안녕하세요 Boylo Trading, " + name + " (참조 " + c.id + ") 표시가 " + price + "인 차량에 관심이 있습니다. 계약금을 넣을 수 있도록 아직 가능한지요?";
+  if (lang === "en") return "Hello Boylo Trading, I am interested in the " + name + " (Ref " + c.id + ") listed at " + price + ". Is it still available to hold with a deposit?";
+  return "Bonjour Boylo Trading, je suis intéressé par le " + name + " (Réf " + c.id + ") affiché à " + price + ". Est-il toujours disponible pour bloquer l'acompte ?";
 }
-function sil(body) {
-  const common = 'fill="none" stroke="currentColor" stroke-width="1.4"';
-  if (body === "utilitaire") return '<svg viewBox="0 0 160 64" class="w-full h-16 text-mute" aria-hidden="true"><path ' + common + ' d="M10 42 h20 l8-16 h70 v16 h22 a10 10 0 0 1 0 16 H26 a10 10 0 0 1 0-16z"/><circle cx="40" cy="52" r="8" ' + common + '/><circle cx="120" cy="52" r="8" ' + common + '/></svg>';
-  if (body === "berline") return '<svg viewBox="0 0 160 64" class="w-full h-16 text-mute" aria-hidden="true"><path ' + common + ' d="M18 42 l14-8 16-12 h44 l18 12 16 8 H18z"/><path ' + common + ' d="M52 22 v12 h48"/><circle cx="48" cy="50" r="8" ' + common + '/><circle cx="116" cy="50" r="8" ' + common + '/></svg>';
-  return '<svg viewBox="0 0 160 64" class="w-full h-16 text-mute" aria-hidden="true"><path ' + common + ' d="M16 44 l12-14 18-10 h52 l22 10 16 14 H16z"/><path ' + common + ' d="M48 20 v14 h58"/><circle cx="50" cy="50" r="8" ' + common + '/><circle cx="118" cy="50" r="8" ' + common + '/></svg>';
-}
-function statusLabel(s) {
-  return s === "incheon" ? t("stIncheon") : s === "sea" ? t("stSea") : t("stDakar");
-}
-function carCard(c, compact) {
-  const chip = c.status === "dakar" ? "text-avail border-avail/40" : "text-mute";
-  const photo = c.photo
-    ? '<img src="' + c.photo + '" alt="" class="w-full ' + (compact ? "h-20" : "h-28") + ' object-cover rounded-sm mb-2" />'
-    : '<div class="' + (compact ? "my-2" : "my-3") + '">' + sil(c.body) + "</div>";
-  const wa = waLink(waCarMessage(c));
-  return '<article id="car-' + c.id + '" class="bg-surface hair rounded-md p-4 flex flex-col scroll-mt-24">' +
-    '<div class="flex items-start justify-between gap-2">' +
-      '<span class="text-[11px] px-2 py-1 rounded-sm border ' + chip + '">' + statusLabel(c.status) + "</span>" +
-    "</div>" +
-    photo +
-    '<h3 class="font-display font-semibold">' + c.make + " " + c.model + "</h3>" +
-    '<p class="text-xs text-mute mt-1">' + c.year + " · " + (c.km || 0).toLocaleString("fr-FR") + " km</p>" +
-    '<p class="font-mono tabular ' + (compact ? "text-base" : "text-lg") + ' mt-3">' + money(c.priceXof) + "</p>" +
-    '<p class="text-[11px] text-mute">' + t("featPrice") + "</p>" +
-    '<a class="focus-ring btn-touch mt-4 inline-flex items-center justify-center gap-2 px-3 rounded-sm text-sm font-semibold text-white" style="background:#25D366" href="' + wa + '" target="_blank" rel="noopener noreferrer">' +
-      '<i data-lucide="message-circle" class="w-4 h-4"></i> ' + t("waGreen") +
-    "</a>" +
-  "</article>";
-}
+
 function applyI18n() {
   document.documentElement.lang = lang === "ko" ? "ko" : lang;
   document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.getAttribute("data-i18n")); });
@@ -836,82 +1112,211 @@ function applyI18n() {
     const b = document.getElementById(id);
     if (b) { b.textContent = modeLabel; b.setAttribute("aria-pressed", view === "admin" ? "true" : "false"); }
   });
+  const sel = document.getElementById("tier");
+  const cur = sel.value || "suvc";
+  sel.innerHTML = TIERS.map((tr) => `<option value="${tr.id}">${t("tier" + { city: "City", suvc: "Suvc", suvl: "Suvl", util: "Util" }[tr.id])}</option>`).join("");
+  sel.value = cur;
   const bud = document.getElementById("budget");
   const bcur = bud.value;
-  bud.innerHTML = '<option value="0">' + t("budgetAll") + "</option>" +
-    '<option value="15000000">' + t("budget1") + "</option>" +
-    '<option value="20000000">' + t("budget2") + "</option>" +
-    '<option value="25000000">' + t("budget3") + "</option>" +
-    '<option value="30000000">' + t("budget4") + "</option>";
+  bud.innerHTML = `<option value="0">${t("budgetAll")}</option>
+    <option value="8000000">${t("budget1")}</option>
+    <option value="12000000">${t("budget2")}</option>
+    <option value="16000000">${t("budget3")}</option>
+    <option value="20000000">${t("budget4")}</option>`;
   if (bcur) bud.value = bcur;
-  const zsel = document.getElementById("rentZone");
-  if (zsel) {
-    const z = zsel.value;
-    if (zsel.options[0]) zsel.options[0].textContent = t("zoneDakar");
-    if (zsel.options[1]) zsel.options[1].textContent = t("zoneAibd");
-    if (zsel.options[2]) zsel.options[2].textContent = t("zoneRegions");
-    zsel.value = z;
-  }
-  fillSimModels();
-  if (stockReady) renderStock(false);
-  fillTiers();
   updateCalc();
+  if (stockReady) renderStock(false);
   renderRentals();
   renderAdmin();
   updateWaLauncher();
+  fillSimModels();
+  showSimStep(simStep);
+  updatePriceModeBtns();
+  if (document.getElementById("rentZone")) {
+    const z = document.getElementById("rentZone").value;
+    const opts = document.getElementById("rentZone").options;
+    if (opts[0]) opts[0].textContent = t("zoneDakar");
+    if (opts[1]) opts[1].textContent = t("zoneAibd");
+    if (opts[2]) opts[2].textContent = t("zoneRegions");
+    document.getElementById("rentZone").value = z;
+  }
+  rentalQuote();
+  updateQaFcfa();
   icons();
 }
-function fillSimModels() {
-  const sel = document.getElementById("simModel");
-  if (!sel) return;
-  const cur = sel.value;
-  sel.innerHTML = SIM_MODELS.map((m) => '<option value="' + m + '">' + m + "</option>").join("");
-  if (cur) sel.value = cur;
+
+function updateCalc() {
+  const id = document.getElementById("tier").value || "suvc";
+  const tier = TIERS.find((x) => x.id === id) || TIERS[1];
+  const cifXof = tier.cifUsd * FX.USD_XOF;
+  const customs = cifXof * CUSTOMS_RATE;
+  const landed = cifXof + customs;
+  const deposit = landed * DEPOSIT_RATE;
+  document.getElementById("calcCif").textContent = money(cifXof);
+  document.getElementById("calcCustoms").textContent = money(customs);
+  document.getElementById("calcLanded").textContent = money(landed);
+  document.getElementById("calcDeposit").textContent = money(deposit);
 }
+
+function sil(body) {
+  const common = 'fill="none" stroke="currentColor" stroke-width="1.4"';
+  if (body === "utilitaire") return `<svg viewBox="0 0 160 64" class="w-full h-16 text-mute" aria-hidden="true"><path ${common} d="M10 42 h20 l8-16 h70 v16 h22 a10 10 0 0 1 0 16 H26 a10 10 0 0 1 0-16z"/><circle cx="40" cy="52" r="8" ${common}/><circle cx="120" cy="52" r="8" ${common}/></svg>`;
+  if (body === "berline") return `<svg viewBox="0 0 160 64" class="w-full h-16 text-mute" aria-hidden="true"><path ${common} d="M18 42 l14-8 16-12 h44 l18 12 16 8 H18z"/><path ${common} d="M52 22 v12 h48"/><circle cx="48" cy="50" r="8" ${common}/><circle cx="116" cy="50" r="8" ${common}/></svg>`;
+  return `<svg viewBox="0 0 160 64" class="w-full h-16 text-mute" aria-hidden="true"><path ${common} d="M16 44 l12-14 18-10 h52 l22 10 16 14 H16z"/><path ${common} d="M48 20 v14 h58"/><circle cx="50" cy="50" r="8" ${common}/><circle cx="118" cy="50" r="8" ${common}/></svg>`;
+}
+
+function statusLabel(s) {
+  return s === "incheon" ? t("stIncheon") : s === "sea" ? t("stSea") : t("stDakar");
+}
+
+function waLink(text) {
+  return `https://wa.me/${WHATSAPP.e164}?text=${encodeURIComponent(text)}`;
+}
+
 function filteredCars() {
   const q = (document.getElementById("search").value || "").trim().toLowerCase();
   return allCars().filter((c) => {
     if (statusFilter !== "all" && c.status !== statusFilter) return false;
     if (bodyFilter !== "all" && c.body !== bodyFilter) return false;
     if (budgetMax && c.priceXof > budgetMax) return false;
-    if (q && !((c.make + " " + c.model + " " + c.id).toLowerCase().includes(q))) return false;
+    if (q && !(`${c.make} ${c.model} ${c.id}`.toLowerCase().includes(q))) return false;
     return true;
   });
 }
+
 function renderSkeletons() {
   const grid = document.getElementById("stockGrid");
-  grid.innerHTML = Array.from({ length: 6 }, () => '<article class="bg-surface hair rounded-md p-4 h-64"><div class="skel h-16 rounded-sm mb-4"></div><div class="skel h-4 w-2/3 rounded-sm mb-2"></div><div class="skel h-4 w-1/3 rounded-sm"></div></article>').join("");
+  grid.innerHTML = Array.from({ length: 6 }, () => `<article class="bg-surface hair rounded-md p-4 h-64"><div class="skel h-16 rounded-sm mb-4"></div><div class="skel h-4 w-2/3 rounded-sm mb-2"></div><div class="skel h-4 w-1/3 rounded-sm"></div></article>`).join("");
 }
-function tierLabel(id) {
-  return t("tier" + ({ city: "City", suvc: "Suvc", suvl: "Suvl", util: "Util" }[id] || "Suvc"));
+
+
+function displayVin(vin) {
+  return String(vin || "").replace(/^DEMO-/, "");
 }
-function fillTiers() {
-  const sel = document.getElementById("tier");
-  if (!sel) return;
-  const cur = sel.value || "suvc";
-  sel.innerHTML = TIERS.map((tr) => '<option value="' + tr.id + '">' + tierLabel(tr.id) + "</option>").join("");
-  sel.value = cur;
+function carCard(c, jumpOnly) {
+  const fuel = c.fuel === "diesel" ? t("fuelDiesel") : t("fuelPetrol");
+  const gear = c.gearbox === "auto" ? t("gearboxAuto") : t("gearboxManual");
+  const chip = c.status === "dakar" ? "text-avail border-avail/40" : "text-mute";
+  const shown = displayPrice(c);
+  const photo = c.photo ? `<img src="${c.photo}" alt="" class="w-full h-28 object-cover rounded-sm mb-2" />` : `<div class="my-3">${sil(c.body)}</div>`;
+  const wa = waLink(waCarMessage(c));
+  const modeLabel = priceMode === "cle" ? t("priceCle") : t("pricePort");
+  const ident = jumpOnly ? `data-jump="${c.id}"` : `id="car-${c.id}"`;
+  const extraClass = jumpOnly ? " cursor-pointer" : "";
+  return `<article ${ident} class="bg-surface hair rounded-md p-4 flex flex-col scroll-mt-24 h-full${extraClass}">
+      <div class="flex items-start justify-between gap-2">
+        <span class="text-[11px] px-2 py-1 rounded-sm border ${chip}">${statusLabel(c.status)}</span>
+        <span class="font-mono text-[10px] text-mute">${displayVin(c.vin)}</span>
+      </div>
+      ${photo}
+      <h3 class="font-display font-semibold">${c.make} ${c.model}</h3>
+      <p class="text-xs text-mute mt-1">${c.year} · ${(c.km || 0).toLocaleString("fr-FR")} km · ${fuel} · ${gear} · ${c.engine || "—"}</p>
+      <p class="font-mono tabular text-lg mt-3">${money(shown)}</p>
+      <p class="text-[11px] text-mute">${modeLabel}</p>
+      <p class="font-mono text-[10px] text-mute mt-1">${c.id}</p>
+      <div class="mt-4 flex flex-col gap-2 mt-auto">
+        <a class="focus-ring btn-touch inline-flex items-center justify-center gap-2 px-3 rounded-sm text-sm font-semibold text-white" style="background:#25D366" href="${wa}" target="_blank" rel="noopener noreferrer">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> ${t("waGreen")}
+        </a>
+        <button type="button" class="focus-ring btn-touch inline-flex items-center justify-center px-3 rounded-sm bg-accent text-bg text-sm font-semibold" data-deposit="${c.id}">${t("depositCta")}</button>
+        <button type="button" class="focus-ring btn-touch inline-flex items-center justify-center px-3 rounded-sm hair text-sm" data-share="${c.id}">${t("share")}</button>
+      </div>
+    </article>`;
 }
-function currentTier() {
-  const id = (document.getElementById("tier") && document.getElementById("tier").value) || "suvc";
-  return TIERS.find((x) => x.id === id) || TIERS[1];
+function bindCardActions(root) {
+  if (!root) return;
+  root.querySelectorAll("[data-deposit]").forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); openDeposit(b.getAttribute("data-deposit")); }));
+  root.querySelectorAll("[data-share]").forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); shareCar(b.getAttribute("data-share")); }));
 }
-function updateCalc() {
-  const cifEl = document.getElementById("calcCif");
-  const cusEl = document.getElementById("calcCustoms");
-  const landedEl = document.getElementById("calcLanded");
-  const depEl = document.getElementById("calcDeposit");
-  if (!cifEl || !cusEl || !landedEl || !depEl) return;
-  const tier = currentTier();
-  const cifXof = tier.cifUsd * FX.USD_XOF;
-  const customs = cifXof * CUSTOMS_RATE;
-  const landed = cifXof + customs;
-  const deposit = landed * DEPOSIT_RATE;
-  cifEl.textContent = money(cifXof);
-  cusEl.textContent = money(customs);
-  landedEl.textContent = money(landed);
-  depEl.textContent = money(deposit);
+function jumpToCar(id) {
+  let el = document.getElementById("car-" + id);
+  if (!el) {
+    statusFilter = "all";
+    bodyFilter = "all";
+    budgetMax = 0;
+    const search = document.getElementById("search");
+    const budget = document.getElementById("budget");
+    if (search) search.value = "";
+    if (budget) budget.value = "0";
+    renderStock(false);
+    el = document.getElementById("car-" + id);
+  }
+  if (!el) return;
+  el.classList.add("ring-2", "ring-accent");
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
 }
+function scrollCarousel(scroller, dir) {
+  if (!scroller) return;
+  const slide = scroller.querySelector(".carousel-slide");
+  const gap = 16;
+  const w = slide ? slide.getBoundingClientRect().width + gap : Math.round(scroller.clientWidth * 0.8);
+  scroller.scrollBy({ left: dir * w, behavior: "smooth" });
+}
+function renderCarousels() {
+  const host = document.getElementById("stockCarousels");
+  if (!host) return;
+  const groups = [
+    { body: "suv", title: "SUV" },
+    { body: "berline", title: t("bodySedan") },
+    { body: "utilitaire", title: t("bodyUtil") }
+  ];
+  // Respect status, search and budget, but not the body tab (each row is a category).
+  const q = (document.getElementById("search") && document.getElementById("search").value || "").trim().toLowerCase();
+  const pool = allCars().filter((c) => {
+    if (statusFilter !== "all" && c.status !== statusFilter) return false;
+    if (budgetMax && displayPrice(c) > budgetMax) return false;
+    if (q && !(`${c.make} ${c.model} ${c.id}`.toLowerCase().includes(q))) return false;
+    return true;
+  });
+  host.innerHTML = groups.map((g) => {
+    const cars = pool.filter((c) => c.body === g.body);
+    if (!cars.length) return "";
+    const slides = cars.map((c) => `<div class="carousel-slide">${carCard(c, true)}</div>`).join("");
+    return `<section class="carousel-block" data-body="${g.body}">
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <h3 class="font-display font-semibold text-lg">${g.title}</h3>
+        <div class="hidden md:flex gap-2">
+          <button type="button" class="focus-ring btn-touch inline-flex items-center justify-center rounded-sm hair px-3" data-carousel-prev aria-label="${t("carouselPrev")}">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          <button type="button" class="focus-ring btn-touch inline-flex items-center justify-center rounded-sm hair px-3" data-carousel-next aria-label="${t("carouselNext")}">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+      <div class="carousel-scroller" role="region" aria-roledescription="carousel" aria-label="${g.title}" tabindex="0">${slides}</div>
+    </section>`;
+  }).join("");
+  bindCardActions(host);
+  icons();
+}
+function bindCarouselEvents() {
+  const host = document.getElementById("stockCarousels");
+  if (!host || host.dataset.bound) return;
+  host.dataset.bound = "1";
+  host.addEventListener("click", (e) => {
+    const prev = e.target.closest("[data-carousel-prev]");
+    const next = e.target.closest("[data-carousel-next]");
+    if (prev || next) {
+      const block = e.target.closest(".carousel-block");
+      const sc = block && block.querySelector(".carousel-scroller");
+      scrollCarousel(sc, next ? 1 : -1);
+      return;
+    }
+    if (e.target.closest("a, button")) return;
+    const card = e.target.closest("[data-jump]");
+    if (card) jumpToCar(card.getAttribute("data-jump"));
+  });
+  host.addEventListener("keydown", (e) => {
+    const sc = e.target.closest(".carousel-scroller");
+    if (!sc) return;
+    if (e.key === "ArrowRight") { e.preventDefault(); scrollCarousel(sc, 1); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); scrollCarousel(sc, -1); }
+    else if (e.key === "Home") { e.preventDefault(); sc.scrollTo({ left: 0, behavior: "smooth" }); }
+    else if (e.key === "End") { e.preventDefault(); sc.scrollTo({ left: sc.scrollWidth, behavior: "smooth" }); }
+  });
+}
+
 function renderStock(withSkeleton) {
   const grid = document.getElementById("stockGrid");
   const empty = document.getElementById("stockEmpty");
@@ -933,7 +1338,7 @@ function renderStock(withSkeleton) {
     empty.classList.add("hidden");
     renderSkeletons();
     count.textContent = "";
-    setTimeout(() => { stockReady = true; renderStock(false); }, 400);
+    setTimeout(() => { stockReady = true; renderStock(false); }, 500);
     return;
   }
   const list = filteredCars();
@@ -944,43 +1349,52 @@ function renderStock(withSkeleton) {
     return;
   }
   empty.classList.add("hidden");
+  updatePriceModeBtns();
   grid.innerHTML = list.map((c) => carCard(c, false)).join("");
+  bindCardActions(grid);
   icons();
   highlightCarFromUrl();
+  renderCarousels();
 }
+
 function rentalQuote() {
   const start = document.getElementById("rentStart") && document.getElementById("rentStart").value;
   const end = document.getElementById("rentEnd") && document.getElementById("rentEnd").value;
   const zone = (document.getElementById("rentZone") && document.getElementById("rentZone").value) || "dakar";
   const box = document.getElementById("rentQuote");
-  if (!box) return { start: start, end: end, zone: zone, days: 0, fee: ZONE_FEES[zone] || 0 };
+  if (!box) return { start, end, zone, days: 0, fee: ZONE_FEES[zone] || 0 };
   if (!start || !end || end < start) {
     box.textContent = t("rentNeedDates");
-    return { start: start, end: end, zone: zone, days: 0, fee: ZONE_FEES[zone] || 0 };
+    return { start, end, zone, days: 0, fee: ZONE_FEES[zone] || 0 };
   }
   const days = dayCount(start, end) || 1;
   const fee = ZONE_FEES[zone] || 0;
   box.textContent = t("daysN").replace("{n}", String(days));
-  return { start: start, end: end, zone: zone, days: days, fee: fee };
+  return { start, end, zone, days, fee };
 }
+
 function renderRentals() {
   const q = rentalQuote();
   const zoneLabel = q.zone === "aibd" ? t("zoneAibd") : q.zone === "regions" ? t("zoneRegions") : t("zoneDakar");
   document.getElementById("rentalBoard").innerHTML = RENTALS.map((r) => {
+    const fuel = r.fuel === "diesel" ? t("fuelDiesel") : t("fuelPetrol");
+    const gear = r.gearbox === "auto" ? t("gearboxAuto") : t("gearboxManual");
     const blocked = q.days && q.start && q.end ? overlaps(r, q.start, q.end) : (r.booked || []).some((b) => {
       const today = new Date().toISOString().slice(0, 10);
       return today >= b.start && today < b.end;
     });
     const freeOn = nextFree(r);
     const badge = blocked
-      ? '<span class="text-[11px] px-2 py-1 rounded-sm hair text-mute">' + t("rentBooked").replace("{date}", fmtDate(freeOn)) + "</span>"
-      : '<span class="text-[11px] px-2 py-1 rounded-sm border border-avail/40 text-avail">' + t("available") + "</span>";
+      ? `<span class="text-[11px] px-2 py-1 rounded-sm hair text-mute">${t("rentBooked").replace("{date}", fmtDate(freeOn))}</span>`
+      : `<span class="text-[11px] px-2 py-1 rounded-sm border border-avail/40 text-avail">${t("available")}</span>`;
     let totalLine = "";
     if (q.days && q.start && q.end && q.end >= q.start) {
       const total = r.daily * q.days + q.fee;
+      const dep = r.daily;
       totalLine = blocked
-        ? '<p class="text-xs text-mute">' + t("rentBlocked").replace("{date}", fmtDate(freeOn)) + "</p>"
-        : '<p class="font-mono tabular text-sm">' + t("rentTotal") + " : " + money(total) + "</p>";
+        ? `<p class="text-xs text-mute">${t("rentBlocked").replace("{date}", fmtDate(freeOn))}</p>`
+        : `<p class="font-mono tabular text-sm">${t("rentTotal")} : ${money(total)}</p>
+           <p class="font-mono tabular text-xs text-avail">${t("rentDeposit")} : ${money(dep)}</p>`;
     }
     const msg = (lang === "ko"
       ? "안녕하세요 Boylo Trading, VDN 렌탈 문의: "
@@ -993,32 +1407,60 @@ function renderRentals() {
       + (q.days && !blocked ? ", " + fcfaPlain(r.daily * q.days + q.fee) : "")
       + ". " + (lang === "en" ? "Is it available?" : lang === "ko" ? "예약 가능한가요?" : "Est-ce disponible ?");
     const wa = waLink(msg);
-    return '<article class="bg-surface hair rounded-md p-5 flex flex-col gap-3">' +
-      '<div class="flex items-start justify-between gap-2"><h3 class="font-display font-semibold">' + r.name + "</h3>" + badge + "</div>" +
-      '<p class="text-xs text-mute">' + r.year + "</p>" +
-      '<p class="font-mono tabular text-sm">' + money(r.daily) + ' <span class="text-mute">' + t("perDay") + "</span></p>" +
-      totalLine +
-      '<div class="flex flex-col sm:flex-row gap-2 mt-auto">' +
-        (blocked
-          ? '<span class="focus-ring btn-touch inline-flex items-center justify-center px-3 rounded-sm hair text-sm opacity-50">' + t("waGreen") + "</span>"
-          : '<a class="focus-ring btn-touch inline-flex items-center justify-center gap-2 px-3 rounded-sm text-sm font-semibold text-white" style="background:#25D366" href="' + wa + '" target="_blank" rel="noopener noreferrer"><i data-lucide="message-circle" class="w-4 h-4"></i> ' + t("waGreen") + "</a>") +
-        (blocked
-          ? ""
-          : '<button type="button" class="focus-ring btn-touch inline-flex items-center justify-center px-3 rounded-sm hair text-sm" data-book="' + r.id + '">' + t("rentBook") + "</button>") +
-      "</div>" +
-    "</article>";
+    return `<article class="bg-surface hair rounded-md p-5 flex flex-col gap-3">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="font-display font-semibold">${r.name}</h3>${badge}
+      </div>
+      <p class="text-xs text-mute">${r.year} · ${(r.km || 0).toLocaleString("fr-FR")} km · ${fuel} · ${gear} · ${r.engine || "—"}</p>
+      <p class="font-mono tabular text-sm">${money(r.daily)} <span class="text-mute">${t("perDay")}</span></p>
+      <p class="font-mono tabular text-sm">${money(r.weekly)} <span class="text-mute">${t("perWeek")}</span></p>
+      ${totalLine}
+      <p class="font-mono text-[10px] text-mute">${r.id}</p>
+      <div class="flex flex-col sm:flex-row gap-2 mt-auto">
+        ${blocked
+          ? `<span class="focus-ring btn-touch inline-flex items-center justify-center px-3 rounded-sm hair text-sm opacity-50">${t("waRent")}</span>`
+          : `<a class="focus-ring btn-touch inline-flex items-center justify-center gap-2 px-3 rounded-sm text-sm font-semibold text-white" style="background:#25D366" href="${wa}" target="_blank" rel="noopener noreferrer"><i data-lucide="message-circle" class="w-4 h-4"></i> ${t("waGreen")}</a>`}
+        <button type="button" class="focus-ring btn-touch inline-flex items-center justify-center px-3 rounded-sm hair text-sm" data-insp="${r.id}">${t("inspOpen")}</button>
+      </div>
+    </article>`;
   }).join("");
-  document.querySelectorAll("[data-book]").forEach((b) => b.addEventListener("click", showRequestOk));
+  document.querySelectorAll("[data-insp]").forEach((b) => b.addEventListener("click", () => openInsp(b.getAttribute("data-insp"))));
   icons();
 }
+
 function renderAdmin() {
-  document.getElementById("requestRows").innerHTML = REQUESTS.map((d) =>
-    '<tr class="border-t border-white/[0.08]"><td class="py-2 pr-3">' + d.ref + '</td><td class="py-2 pr-3 font-sans">' + d.vehicle + '</td><td class="py-2">' + (d.status === "pending" ? t("stPending") : t("stOk")) + "</td></tr>"
-  ).join("");
-  document.getElementById("msgFeed").innerHTML = MESSAGES.map((m) =>
-    '<div class="hair rounded-sm p-3 ' + (m.side === "kr" ? "ml-6" : "mr-6") + '"><p class="text-[10px] text-mute mb-1">' + (m.side === "kr" ? "KR" : "FR") + '</p><p class="text-sm ' + (m.side === "kr" ? "font-ko" : "") + '">' + m.text + "</p></div>"
-  ).join("");
+  document.getElementById("marginCards").innerHTML = `
+    <article class="bg-surface hair rounded-md p-5 lg:col-span-3">
+      <h2 class="font-display font-semibold mb-1">${t("marginTitle")}</h2>
+      <p class="text-xs text-mute mb-4">${t("adminLead")}</p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        ${MARGINS.map((m) => `<div class="hair rounded-sm p-4"><p class="text-xs text-mute">${m.label}</p><p class="font-mono tabular text-lg mt-1">${m.buy || m.mid || m.sell}</p><p class="text-[11px] text-mute mt-1">${m.note}</p></div>`).join("")}
+      </div>
+    </article>`;
+  document.getElementById("depositRows").innerHTML = DEPOSITS.map((d) => `<tr class="border-t border-white/[0.08]">
+    <td class="py-2 pr-3">${d.ref}</td><td class="py-2 pr-3 font-sans">${d.vehicle}</td>
+    <td class="py-2 pr-3">${money(d.amount)}</td>
+    <td class="py-2">${d.status === "pending" ? t("stPending") : t("stSim")}</td>
+  </tr>`).join("");
+  document.getElementById("msgFeed").innerHTML = MESSAGES.map((m) => `<div class="hair rounded-sm p-3 ${m.side === "kr" ? "ml-6" : "mr-6"}">
+    <p class="text-[10px] text-mute mb-1">${m.side === "kr" ? "KR" : "FR"}</p>
+    <p class="text-sm ${m.side === "kr" ? "font-ko" : ""}">${m.text}</p>
+  </div>`).join("");
 }
+
+function shareCar(id) {
+  const url = new URL(location.href);
+  url.searchParams.set("car", id);
+  url.hash = "car-" + id;
+  const href = url.toString();
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(href).then(() => showToast(t("shareCopied"))).catch(() => showToast(href));
+  } else {
+    showToast(href);
+  }
+  history.replaceState(null, "", url);
+}
+
 function highlightCarFromUrl() {
   const params = new URLSearchParams(location.search);
   let id = params.get("car");
@@ -1029,10 +1471,72 @@ function highlightCarFromUrl() {
   el.classList.add("ring-2", "ring-accent");
   el.scrollIntoView({ behavior: "smooth", block: "center" });
 }
+
+function showSimStep(n) {
+  simStep = n;
+  ["1", "2", "3"].forEach((s) => {
+    const pane = document.getElementById("simPane" + s);
+    if (pane) pane.classList.toggle("hidden", s !== String(n));
+  });
+  document.querySelectorAll("#simSteps li").forEach((li) => {
+    li.classList.toggle("font-medium", li.getAttribute("data-step") === String(n));
+    li.classList.toggle("text-mute", li.getAttribute("data-step") !== String(n));
+  });
+}
+
+function fillSimModels() {
+  const sel = document.getElementById("simModel");
+  if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = SIM_MODELS.map((m) => `<option value="${m.id}">${m.id}</option>`).join("");
+  if (cur) sel.value = cur;
+}
+
+function runSim() {
+  const id = document.getElementById("simModel").value;
+  const y0 = Number(document.getElementById("simYearFrom").value) || 2018;
+  const y1 = Number(document.getElementById("simYearTo").value) || 2021;
+  const budget = Number(document.getElementById("simBudget").value) || 0;
+  const model = SIM_MODELS.find((m) => m.id === id) || SIM_MODELS[0];
+  const span = Math.max(0, Math.min(y1, model.maxYear) - Math.max(y0, model.minYear));
+  const min = model.min;
+  const max = model.max;
+  const minL = min.toLocaleString("fr-FR");
+  const maxL = max.toLocaleString("fr-FR");
+  let verdict;
+  if (!budget) verdict = "";
+  else if (budget < min * 0.88) verdict = t("simTight").replace("{min}", minL).replace("{max}", maxL);
+  else if (budget > max * 1.12) verdict = t("simHigh");
+  else verdict = t("simOk");
+  const days = model.days + (span < 1 ? 5 : 0);
+  document.getElementById("simResult").innerHTML = `
+    <p class="font-display font-semibold">${model.id} · ${y0}–${y1}</p>
+    <p class="mt-3 text-sm">${t("simBracket")}</p>
+    <p class="font-mono tabular text-lg mt-1">${minL} – ${maxL} FCFA</p>
+    <p class="text-sm mt-3">${t("simTime").replace("{n}", String(days))}</p>
+    <p class="text-sm mt-3">${verdict}</p>`;
+  showSimStep(3);
+}
+
+function usdFromInput(amount, cur) {
+  if (cur === "KRW") return amount / FX.USD_KRW;
+  return amount;
+}
+function updateQaFcfa() {
+  const form = document.getElementById("quickAdd");
+  if (!form) return;
+  const amount = Number(form.price.value) || 0;
+  const cur = form.priceCur.value;
+  const margin = Number(form.margin.value) || 0;
+  const xof = usdFromInput(amount, cur) * FX.USD_XOF * (1 + margin / 100);
+  document.getElementById("qaFcfaOut").textContent = amount ? fcfaPlain(xof) : "—";
+  return xof;
+}
+
 function resizePhoto(file, cb) {
   const img = new Image();
   const url = URL.createObjectURL(file);
-  img.onload = function () {
+  img.onload = () => {
     const max = 800;
     let w = img.width, h = img.height;
     if (w > max || h > max) {
@@ -1043,18 +1547,20 @@ function resizePhoto(file, cb) {
     canvas.width = w; canvas.height = h;
     canvas.getContext("2d").drawImage(img, 0, 0, w, h);
     URL.revokeObjectURL(url);
-    cb(canvas.toDataURL("image/jpeg", 0.8));
+    cb(canvas.toDataURL("image/jpeg", 0.7));
   };
   img.src = url;
 }
+
 function publishListing(e) {
   e.preventDefault();
   const form = e.target;
   const make = (form.make.value || "").trim();
   const model = (form.model.value || "").trim();
   const year = Number(form.year.value);
-  const price = Number(form.price.value);
-  if (!make || !model || !year || !price) { showToast(t("qaNeed")); return; }
+  const amount = Number(form.price.value);
+  if (!make || !model || !year || !amount) { showToast(t("qaNeed")); return; }
+  const xof = Math.round(updateQaFcfa());
   const id = "BY-NEW-" + Date.now().toString().slice(-6);
   extraCars.unshift({
     id: id,
@@ -1062,20 +1568,31 @@ function publishListing(e) {
     model: model,
     year: year,
     km: Number(form.km.value) || 0,
-    body: form.body.value || "suv",
-    status: form.status.value || "incheon",
-    priceXof: Math.round(price),
+    fuel: form.fuel.value || "diesel",
+    gearbox: "auto",
+    engine: (form.engine.value || "").trim() || "—",
+    priceXof: xof,
+    status: "incheon",
+    body: "suv",
+    vin: "DEMO-" + id,
     photo: qaPhotoData || ""
   });
   saveExtra();
-  form.reset();
   qaPhotoData = "";
-  const img = document.getElementById("qaPreview");
-  img.classList.add("hidden");
-  img.removeAttribute("src");
+  form.reset();
+  form.margin.value = "15";
+  const preview = document.getElementById("qaPreview");
+  preview.classList.add("hidden"); preview.removeAttribute("src");
+  updateQaFcfa();
   showToast(t("qaOk"));
-  renderStock(false);
+  stockReady = true;
+  setMode("client");
+  setTimeout(() => {
+    const el = document.getElementById("car-" + id);
+    if (el) { el.classList.add("ring-2", "ring-accent"); el.scrollIntoView({ behavior: "smooth", block: "center" }); }
+  }, 200);
 }
+
 function setMode(next) {
   view = next;
   document.getElementById("clientView").classList.toggle("hidden", view === "admin");
@@ -1083,6 +1600,7 @@ function setMode(next) {
   applyI18n();
   closeMenu();
 }
+
 function updateWaLauncher() {
   const msg = lang === "ko"
     ? "안녕하세요, BOYLOTRADING 문의입니다. (7 VDN, Ouest Foire)"
@@ -1090,25 +1608,75 @@ function updateWaLauncher() {
     ? "Hello, I would like to speak with BOYLOTRADING (7 VDN, Ouest Foire)."
     : "Bonjour, je souhaite échanger avec BOYLOTRADING (7 VDN, Ouest Foire).";
   document.getElementById("waLauncher").href = waLink(msg);
-  const supply = lang === "ko"
-    ? "안녕하세요 Boylo Trading, 한국 공급사/수출업체입니다. 차량을 제안하고 싶습니다."
-    : lang === "en"
-    ? "Hello Boylo Trading, I am a supplier / exporter in Korea and would like to offer a vehicle."
-    : "Bonjour Boylo Trading, je suis fournisseur / exportateur en Corée et souhaite proposer un véhicule.";
-  document.getElementById("waSupply").href = waLink(supply);
 }
-function onOrder(e) {
-  e.preventDefault();
-  const model = document.getElementById("simModel").value;
-  const budget = Number(document.getElementById("simBudget").value) || 0;
-  const budgetTxt = budget ? fcfaPlain(budget) : (lang === "en" ? "to confirm" : lang === "ko" ? "협의" : "à préciser");
-  const msg = lang === "ko"
-    ? "안녕하세요 Boylo Trading, " + model + " 주문을 문의합니다. 예산: " + budgetTxt + "."
-    : lang === "en"
-    ? "Hello Boylo Trading, I would like to order a " + model + ". Budget: " + budgetTxt + "."
-    : "Bonjour Boylo Trading, je souhaite commander un " + model + ". Budget : " + budgetTxt + ".";
-  window.open(waLink(msg), "_blank", "noopener,noreferrer");
+
+function openDeposit(id) {
+  depositCar = CARS.find((c) => c.id === id);
+  if (!depositCar) return;
+  lastFocus = document.activeElement;
+  const dep = displayPrice(depositCar) * DEPOSIT_RATE;
+  document.getElementById("depositSummary").innerHTML = `<p class="font-display font-semibold">${depositCar.make} ${depositCar.model} ${depositCar.year}</p>
+    <p class="font-mono text-xs text-mute">${depositCar.id} · ${depositCar.vin}</p>
+    <p class="mt-2">${t("priceOf")} : <span class="font-mono tabular">${money(displayPrice(depositCar))}</span></p>
+    <p class="text-avail">${t("depositOf")} : <span class="font-mono tabular">${money(dep)}</span></p>`;
+  document.getElementById("depositModal").classList.remove("hidden");
+  document.querySelector("#depositModal [data-close-deposit]").focus();
+  icons();
 }
+function closeDeposit() {
+  document.getElementById("depositModal").classList.add("hidden");
+  if (lastFocus) lastFocus.focus();
+}
+function simulatePay() {
+  if (!depositCar) return;
+  const method = (document.querySelector("input[name=pay]:checked") || {}).value || "wave";
+  const dep = displayPrice(depositCar) * DEPOSIT_RATE;
+  const rec = `BOYLOTRADING — ${t("receiptTitle")}\n\n${t("colRef")}: ${Date.now().toString().slice(-8)}\n${depositCar.make} ${depositCar.model}\n${depositCar.id}\nVIN ${String(depositCar.vin||"").replace(/^DEMO-/, "")}\n${t("depositOf")}: ${money(dep)}\n${t("payMethod")}: ${method}\n7 VDN, Ouest Foire, Dakar\nPGWJ+382`;
+  document.getElementById("receiptBody").textContent = rec;
+  closeDeposit();
+  document.getElementById("receiptModal").classList.remove("hidden");
+}
+function closeReceipt() { document.getElementById("receiptModal").classList.add("hidden"); }
+
+function openInsp(id) {
+  lastFocus = document.activeElement;
+  document.querySelector("#inspForm [name=vehicle]").value = id;
+  document.getElementById("inspBackdrop").classList.remove("hidden");
+  document.getElementById("inspDrawer").classList.remove("hidden");
+  document.getElementById("inspClose").focus();
+  icons();
+}
+function closeInsp() {
+  document.getElementById("inspBackdrop").classList.add("hidden");
+  document.getElementById("inspDrawer").classList.add("hidden");
+  if (lastFocus) lastFocus.focus();
+}
+
+function showToast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.remove("hidden");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => el.classList.add("hidden"), 3200);
+}
+
+function openMenu() {
+  const d = document.getElementById("drawer");
+  const b = document.getElementById("backdrop");
+  d.hidden = false; b.hidden = false;
+  requestAnimationFrame(() => { d.classList.add("open"); b.classList.remove("opacity-0", "pointer-events-none"); });
+  document.getElementById("menuOpen").setAttribute("aria-expanded", "true");
+  document.getElementById("menuClose").focus();
+}
+function closeMenu() {
+  const d = document.getElementById("drawer");
+  const b = document.getElementById("backdrop");
+  d.classList.remove("open");
+  b.classList.add("opacity-0", "pointer-events-none");
+  document.getElementById("menuOpen").setAttribute("aria-expanded", "false");
+  setTimeout(() => { d.hidden = true; b.hidden = true; }, 200);
+}
+
 function onTrack(e) {
   e.preventDefault();
   const ref = (document.getElementById("trackRef").value || "").trim().toUpperCase();
@@ -1117,60 +1685,22 @@ function onTrack(e) {
   const steps = t("corridorSteps");
   if (!file) {
     box.classList.remove("hidden");
-    box.innerHTML = '<p class="text-sm">' + t("trackUnknown") + "</p>";
+    box.innerHTML = `<p class="text-sm">${t("trackUnknown")}</p>`;
     return;
   }
   box.classList.remove("hidden");
-  box.innerHTML = '<p class="font-display font-semibold">' + file.car + "</p>" +
-    '<p class="font-mono text-xs mt-1">' + ref + "</p>" +
-    '<ol class="mt-4 space-y-2">' + steps.map((name, i) => {
+  box.innerHTML = `<p class="font-display font-semibold">${file.car}</p>
+    <p class="font-mono text-xs mt-1">${ref} · ${t("trackShip")}: ${file.ship}</p>
+    <ol class="mt-4 space-y-2">${steps.map((name, i) => {
       const n = i + 1;
       const state = n < file.step ? t("done") : n === file.step ? t("current") : t("upcoming");
       const cls = n < file.step ? "text-avail" : n === file.step ? "text-accent" : "text-mute";
-      return '<li class="flex gap-3 text-sm"><span class="font-mono ' + cls + '">0' + n + "</span><span>" + name + '</span><span class="text-xs ' + cls + ' ml-auto">' + state + "</span></li>";
-    }).join("") + "</ol>";
-}
-function showRequestOk() {
-  document.getElementById("okModal").classList.remove("hidden");
-}
-function closeRequestOk() {
-  document.getElementById("okModal").classList.add("hidden");
-}
-function showToast(msg) {
-  const el = document.getElementById("toast");
-  if (!el) { showRequestOk(); return; }
-  el.textContent = msg;
-  el.classList.remove("hidden");
-  setTimeout(() => el.classList.add("hidden"), 2800);
-}
-function openMenu() {
-  const d = document.getElementById("drawer");
-  const b = document.getElementById("backdrop");
-  d.hidden = false; b.hidden = false;
-  requestAnimationFrame(() => { d.classList.add("open"); b.classList.remove("opacity-0"); b.classList.remove("pointer-events-none"); });
-  document.getElementById("menuOpen").setAttribute("aria-expanded", "true");
-}
-function closeMenu() {
-  const d = document.getElementById("drawer");
-  const b = document.getElementById("backdrop");
-  d.classList.remove("open");
-  b.classList.add("opacity-0");
-  b.classList.add("pointer-events-none");
-  setTimeout(() => { d.hidden = true; b.hidden = true; }, 200);
-  document.getElementById("menuOpen").setAttribute("aria-expanded", "false");
-}
-function isoAdd(n) {
-  const d = new Date();
-  d.setDate(d.getDate() + n);
-  return d.toISOString().slice(0, 10);
+      return `<li class="flex gap-3 text-sm"><span class="font-mono ${cls}">0${n}</span><span>${name}</span><span class="text-xs ${cls} ml-auto">${state}</span></li>`;
+    }).join("")}</ol>`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   loadExtra();
-  const rs = document.getElementById("rentStart");
-  const re = document.getElementById("rentEnd");
-  if (rs && !rs.value) rs.value = isoAdd(1);
-  if (re && !re.value) re.value = isoAdd(4);
   document.querySelectorAll("[data-set-lang]").forEach((b) => b.addEventListener("click", () => { lang = b.getAttribute("data-set-lang"); applyI18n(); }));
   document.getElementById("modeToggle").addEventListener("click", () => setMode(view === "admin" ? "client" : "admin"));
   document.getElementById("modeToggleMobile").addEventListener("click", () => setMode(view === "admin" ? "client" : "admin"));
@@ -1179,6 +1709,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("backdrop").addEventListener("click", closeMenu);
   document.querySelectorAll(".drawer-link").forEach((a) => a.addEventListener("click", closeMenu));
   document.getElementById("tier").addEventListener("change", updateCalc);
+  document.getElementById("currency").addEventListener("change", (e) => { currency = e.target.value; updateCalc(); renderStock(false); renderRentals(); renderAdmin(); });
   document.getElementById("search").addEventListener("input", () => renderStock(false));
   document.getElementById("budget").addEventListener("change", (e) => { budgetMax = Number(e.target.value) || 0; renderStock(false); });
   document.querySelectorAll(".status-tab").forEach((b) => b.addEventListener("click", () => { statusFilter = b.getAttribute("data-status"); renderStock(false); }));
@@ -1190,8 +1721,20 @@ document.addEventListener("DOMContentLoaded", () => {
     renderStock(false);
   });
   document.getElementById("trackForm").addEventListener("submit", onTrack);
-  document.getElementById("orderForm").addEventListener("submit", onOrder);
-  document.querySelectorAll("[data-close-ok]").forEach((b) => b.addEventListener("click", closeRequestOk));
+  document.getElementById("simPay").addEventListener("click", simulatePay);
+  document.querySelectorAll("[data-close-deposit]").forEach((b) => b.addEventListener("click", closeDeposit));
+  document.querySelectorAll("[data-close-receipt]").forEach((b) => b.addEventListener("click", closeReceipt));
+  document.getElementById("inspClose").addEventListener("click", closeInsp);
+  document.getElementById("inspBackdrop").addEventListener("click", closeInsp);
+  document.getElementById("inspForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    if (!fd.get("name") || !fd.get("idnum") || !fd.get("license") || !fd.get("phone")) {
+      showToast(t("inspMissing")); return;
+    }
+    closeInsp();
+    showToast(t("inspOk"));
+  });
   document.getElementById("leadForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
@@ -1201,18 +1744,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     err.classList.add("hidden");
     e.target.reset();
-    showRequestOk();
+    showToast(t("leadSuccess"));
   });
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
-    if (!document.getElementById("okModal").classList.contains("hidden")) { closeRequestOk(); return; }
+    if (!document.getElementById("receiptModal").classList.contains("hidden")) { closeReceipt(); return; }
+    if (!document.getElementById("depositModal").classList.contains("hidden")) { closeDeposit(); return; }
+    if (!document.getElementById("inspDrawer").classList.contains("hidden")) { closeInsp(); return; }
     if (!document.getElementById("drawer").hidden) closeMenu();
   });
+  document.querySelectorAll(".price-mode").forEach((b) => b.addEventListener("click", () => { priceMode = b.getAttribute("data-mode"); renderStock(false); }));
+  const rs = document.getElementById("rentStart");
+  const re = document.getElementById("rentEnd");
+  const rz = document.getElementById("rentZone");
   if (rs) rs.addEventListener("change", renderRentals);
   if (re) re.addEventListener("change", renderRentals);
-  document.getElementById("rentZone").addEventListener("change", renderRentals);
+  if (rz) rz.addEventListener("change", renderRentals);
+  document.getElementById("simTo2").addEventListener("click", () => showSimStep(2));
+  document.getElementById("simBack1").addEventListener("click", () => showSimStep(1));
+  document.getElementById("simTo3").addEventListener("click", runSim);
+  document.getElementById("simBack2").addEventListener("click", () => showSimStep(2));
   const qa = document.getElementById("quickAdd");
-  if (qa) qa.addEventListener("submit", publishListing);
+  if (qa) {
+    qa.addEventListener("input", updateQaFcfa);
+    qa.addEventListener("submit", publishListing);
+  }
   document.getElementById("qaPhoto").addEventListener("change", (ev) => {
     const file = ev.target.files && ev.target.files[0];
     if (!file) return;
@@ -1223,12 +1779,12 @@ document.addEventListener("DOMContentLoaded", () => {
       img.classList.remove("hidden");
     });
   });
+  bindCarouselEvents();
   applyI18n();
   renderStock(true);
   icons();
   setTimeout(highlightCarFromUrl, 600);
 });
 </script>
-<div id="toast" class="fixed bottom-5 right-5 z-[90] hidden max-w-sm bg-elevated hair rounded-sm px-4 py-3 text-sm shadow-lg" role="status"></div>
 </body>
 </html>
