@@ -112,7 +112,12 @@
         <a href="#rental" class="focus-ring btn-touch inline-flex items-center px-4 rounded-sm bg-accent text-bg text-sm font-semibold hover:bg-amber-400 transition" data-i18n="ctaRent">Louer sur la VDN</a>
       </div>
 
-      <button type="button" id="menuOpen" class="md:hidden ml-auto focus-ring btn-touch inline-flex items-center justify-center rounded-sm hair" data-i18n-aria="openMenu" aria-expanded="false" aria-controls="drawer">
+      <div class="md:hidden ml-auto flex hair rounded-sm overflow-hidden" role="group" aria-label="Language">
+        <button type="button" class="lang-btn focus-ring btn-touch px-2.5 text-xs font-semibold" data-set-lang="fr">FR</button>
+        <button type="button" class="lang-btn focus-ring btn-touch px-2.5 text-xs font-semibold" data-set-lang="ko">KR</button>
+        <button type="button" class="lang-btn focus-ring btn-touch px-2.5 text-xs font-semibold" data-set-lang="en">EN</button>
+      </div>
+      <button type="button" id="menuOpen" class="md:hidden ml-2 focus-ring btn-touch inline-flex items-center justify-center rounded-sm hair" data-i18n-aria="openMenu" aria-expanded="false" aria-controls="drawer">
         <i data-lucide="menu" class="w-5 h-5"></i>
       </button>
     </div>
