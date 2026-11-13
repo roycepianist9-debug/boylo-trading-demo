@@ -291,6 +291,17 @@
         </div>
       </section>
 
+      <!--
+  Rental photos — full attribution in /credits.txt (not shown on the page).
+  Kia Morning: Harvey Bold, Wikimedia Commons, CC0 1.0
+  https://commons.wikimedia.org/wiki/File:2021_KIA_Picanto_X-Line_S_-_998cc_1.0_(65PS)_Petrol_-_Lime_Light_Metallic_-_10-2024,_Front.jpg
+  Hyundai Tucson: Ki hoon, Wikimedia Commons, CC BY-SA 4.0
+  https://commons.wikimedia.org/wiki/File:2019_Hyundai_Tucson_Front-Side.jpg
+  Hyundai Grand Starex: Ethan Llamas, Wikimedia Commons, CC BY-SA 4.0
+  https://commons.wikimedia.org/wiki/File:Hyundai_Grand_Starex_TQ_FL2_Urban_Tan_Brown_01.jpg
+  Kia Sportage: HJUdall, Wikimedia Commons, CC0 1.0
+  https://commons.wikimedia.org/wiki/File:20_Kia_Sportage_EX.jpg
+-->
       <section id="rental" class="px-4 sm:px-6 py-12 sm:py-16 border-t border-white/[0.08]">
         <div class="mx-auto max-w-page">
           <p class="text-sm font-semibold tracking-wide text-accent" data-i18n="introRent">Louez une voiture</p>
@@ -652,11 +663,12 @@ const ZONE_FEES = { dakar: 0, aibd: 15000, regions: 40000 }; // DEMO zone supple
 
 const STORAGE_KEY = "boylo-demo-listings";
 
+/* Rental photos: see /credits.txt and the HTML comment above <section id="rental">. */
 const RENTALS = [
-  { id: "VDN-MRN-01", name: "Kia Morning", year: 2021, km: 28000, fuel: "petrol", gearbox: "auto", engine: "1.0", daily: 25000, weekly: 150000, booked: [] },
-  { id: "VDN-TUC-02", name: "Hyundai Tucson", year: 2019, km: 54000, fuel: "diesel", gearbox: "auto", engine: "2.0", daily: 55000, weekly: 330000, booked: [{ start: "2026-12-01", end: "2026-12-08" }] },
-  { id: "VDN-STX-03", name: "Hyundai Grand Starex", year: 2018, km: 98000, fuel: "diesel", gearbox: "auto", engine: "2.5", daily: 70000, weekly: 420000, booked: [{ start: "2026-11-08", end: "2026-11-22" }] },
-  { id: "VDN-SPT-04", name: "Kia Sportage", year: 2020, km: 41000, fuel: "petrol", gearbox: "auto", engine: "1.6", daily: 55000, weekly: 330000, booked: [] }
+  { id: "VDN-MRN-01", name: "Kia Morning", year: 2021, km: 28000, fuel: "petrol", gearbox: "auto", engine: "1.0", daily: 25000, weekly: 150000, booked: [], photo: "img/rental/morning.webp" },
+  { id: "VDN-TUC-02", name: "Hyundai Tucson", year: 2019, km: 54000, fuel: "diesel", gearbox: "auto", engine: "2.0", daily: 55000, weekly: 330000, booked: [{ start: "2026-12-01", end: "2026-12-08" }], photo: "img/rental/tucson.webp" },
+  { id: "VDN-STX-03", name: "Hyundai Grand Starex", year: 2018, km: 98000, fuel: "diesel", gearbox: "auto", engine: "2.5", daily: 70000, weekly: 420000, booked: [{ start: "2026-11-08", end: "2026-11-22" }], photo: "img/rental/starex.webp" },
+  { id: "VDN-SPT-04", name: "Kia Sportage", year: 2020, km: 41000, fuel: "petrol", gearbox: "auto", engine: "1.6", daily: 55000, weekly: 330000, booked: [], photo: "img/rental/sportage.webp" }
 ];
 /* Rental rates, booked dates and zone fees are SAMPLE / DEMO only. */
 
@@ -722,7 +734,7 @@ const I18N = {
     rentalLead: "Choisissez vos dates et réservez au 7 VDN, jour et nuit.",
     available: "Disponible", unavailable: "Indisponible",
     perDay: "/ jour", perWeek: "/ semaine",
-    waRent: "Réserver sur WhatsApp", inspOpen: "État des lieux et pièce d'identité",
+    waRent: "Réserver sur WhatsApp", rentalAlt: "{name}, vue extérieure", inspOpen: "État des lieux et pièce d'identité",
     trackTitle: "Suivi de votre véhicule",
     trackLead: "Entrez votre référence pour voir où en est votre véhicule.",
     cIncheon: "Préparation et stock Corée", cBusan: "Chargement RoRo", cTanger: "Escale", cDakar: "Arrivée et douane",
@@ -874,7 +886,7 @@ const I18N = {
     rentalLead: "Pick your dates and book at 7 VDN, day and night.",
     available: "Available", unavailable: "Unavailable",
     perDay: "/ day", perWeek: "/ week",
-    waRent: "Book on WhatsApp", inspOpen: "Inspection and ID",
+    waRent: "Book on WhatsApp", rentalAlt: "{name}, exterior view", inspOpen: "Inspection and ID",
     trackTitle: "Track your vehicle",
     trackLead: "Enter your reference to see where your vehicle is.",
     cIncheon: "Prep and Korea stock", cBusan: "RoRo loading", cTanger: "Call", cDakar: "Arrival and customs",
@@ -999,7 +1011,7 @@ const I18N = {
     rentalLead: "날짜를 고르고 7 VDN에서 주야간으로 예약하세요.",
     available: "예약 가능", unavailable: "예약 불가",
     perDay: "/일", perWeek: "/주",
-    waRent: "WhatsApp으로 예약", inspOpen: "점검 및 신분증",
+    waRent: "WhatsApp으로 예약", rentalAlt: "{name} 외관", inspOpen: "점검 및 신분증",
     trackTitle: "차량 추적",
     trackLead: "차량이 어디까지 왔는지 보려면 조회 번호를 입력하세요.",
     cIncheon: "한국 재고 준비", cBusan: "RoRo 선적", cTanger: "기항", cDakar: "도착 및 통관",
@@ -1501,7 +1513,12 @@ function renderRentals() {
       + (q.days && !blocked ? ", " + fcfaPlain(r.daily * q.days + q.fee) : "")
       + ". " + (lang === "en" ? "Is it available?" : lang === "ko" ? "예약 가능한가요?" : "Est-ce disponible ?");
     const wa = waLink(msg);
+    const alt = String(t("rentalAlt") || "{name}").replace("{name}", r.name);
+    const photo = r.photo
+      ? `<img src="${r.photo}" alt="${alt}" width="800" height="500" loading="lazy" decoding="async" class="w-full aspect-[16/10] object-cover rounded-sm">`
+      : "";
     return `<article class="bg-surface hair rounded-md p-5 flex flex-col gap-3">
+      ${photo}
       <div class="flex items-start justify-between gap-2">
         <h3 class="font-display font-semibold">${r.name}</h3>${badge}
       </div>
