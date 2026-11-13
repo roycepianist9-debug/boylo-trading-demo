@@ -138,16 +138,16 @@
             </div>
           </div>
           <div class="lg:col-span-6">
-            <div class="bg-surface hair rounded-md p-5 sm:p-7">
-              <h2 class="font-display font-semibold text-lg" data-i18n="calcTitle">Prix clé en main Dakar</h2>
-              <label class="block text-xs text-mute mt-5 mb-1" for="tier" data-i18n="calcTier">Catégorie du véhicule</label>
-              <select id="tier" class="focus-ring w-full bg-elevated hair rounded-sm px-3 h-11 text-sm mb-6"></select>
-              <p id="calcLanded" class="font-display font-semibold font-mono tabular text-3xl sm:text-4xl tracking-tight leading-none"></p>
-              <p id="calcDeposit" class="mt-3 text-sm text-mute"></p>
-              <a id="calcWa" href="#" target="_blank" rel="noopener noreferrer" class="focus-ring btn-touch mt-6 inline-flex items-center justify-center gap-2 w-full px-5 rounded-sm text-sm font-semibold text-white" style="background:#25D366">
-                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                <span data-i18n="waGreen">WhatsApp</span>
-              </a>
+            <div class="bg-surface hair rounded-md p-5 sm:p-6">
+              <h2 class="font-display font-semibold text-lg mb-5" data-i18n="calcTitle">Coût rendu &amp; acompte</h2>
+              <label class="block text-xs text-mute mb-1" for="tier" data-i18n="calcTier">Catégorie du véhicule</label>
+              <select id="tier" class="focus-ring w-full bg-elevated hair rounded-sm px-3 h-11 text-sm mb-4"></select>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between gap-4"><span class="text-mute" data-i18n="calcCif">CIF Dakar</span><span id="calcCif" class="font-mono tabular"></span></div>
+                <div class="flex justify-between gap-4"><span class="text-mute" data-i18n="calcCustoms">Douane</span><span id="calcCustoms" class="font-mono tabular"></span></div>
+                <div class="flex justify-between gap-4 border-t border-white/[0.08] pt-3"><span data-i18n="calcLanded">Coût rendu estimé</span><span id="calcLanded" class="font-mono tabular font-medium"></span></div>
+                <div class="flex justify-between gap-4 text-avail"><span data-i18n="calcDeposit">Acompte 30 %</span><span id="calcDeposit" class="font-mono tabular font-medium"></span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -480,12 +480,15 @@ const CARS = [
 ];
 /* priceXof is the displayed clé-en-main Dakar price. */
 
-/* Hero prices are all-in clé en main Dakar (sample). Acompte line is 30% of that figure. */
+/* Hero calculator sample rates (not shown in the UI): FX USD_XOF 600, duties 0.64 of CIF, deposit 0.30 of landed. */
+const FX = { USD_XOF: 600 };
+const CUSTOMS_RATE = 0.64;
+const DEPOSIT_RATE = 0.30;
 const TIERS = [
-  { id: "city", priceXof: 7872000 },
-  { id: "suvc", priceXof: 13776000 },
-  { id: "suvl", priceXof: 17712000 },
-  { id: "util", priceXof: 10824000 }
+  { id: "city", cifUsd: 8000 },
+  { id: "suvc", cifUsd: 14000 },
+  { id: "suvl", cifUsd: 18000 },
+  { id: "util", cifUsd: 11000 }
 ];
 const SIM_MODELS = ["Tucson", "Sportage", "Santa Fe", "Sorento", "Porter II", "Avante", "K5"];
 const ZONE_FEES = { dakar: 0, aibd: 15000, regions: 40000 };
@@ -528,9 +531,12 @@ const I18N = {
     heroTitle: "Votre véhicule importé de Corée ou loué sur la VDN en 2 clics",
     heroSub: "Stock Corée visible par statut. Location au 7 VDN, Ouest Foire, jour et nuit.",
     featPrice: "Clé en main Dakar",
-    calcTitle: "Prix clé en main Dakar",
+    calcTitle: "Coût rendu & acompte",
     calcTier: "Catégorie du véhicule",
-    calcDeposit: "Acompte 30 % : {n}",
+    calcCif: "CIF Dakar",
+    calcCustoms: "Douane",
+    calcLanded: "Coût rendu estimé",
+    calcDeposit: "Acompte 30 %",
     tierCity: "Citadine (Avante, K5)",
     tierSuvc: "SUV compact (Tucson, Sportage)",
     tierSuvl: "SUV (Santa Fe, Sorento)",
@@ -594,9 +600,12 @@ const I18N = {
     heroTitle: "Your vehicle imported from Korea or rented on the VDN in 2 taps",
     heroSub: "Korea stock by status. Rentals at 7 VDN, Ouest Foire, day and night.",
     featPrice: "Turn-key Dakar",
-    calcTitle: "Turn-key price Dakar",
+    calcTitle: "Landed cost & deposit",
     calcTier: "Vehicle type",
-    calcDeposit: "30% deposit: {n}",
+    calcCif: "CIF Dakar",
+    calcCustoms: "Customs",
+    calcLanded: "Estimated landed cost",
+    calcDeposit: "30% deposit",
     tierCity: "City car (Avante, K5)",
     tierSuvc: "Compact SUV (Tucson, Sportage)",
     tierSuvl: "SUV (Santa Fe, Sorento)",
@@ -660,9 +669,12 @@ const I18N = {
     heroTitle: "한국에서 수입하거나 VDN에서 렌트, 두 번이면 됩니다",
     heroSub: "상태별로 보는 한국 재고. 다카르 7 VDN, Ouest Foire에서 주야간 렌탈.",
     featPrice: "다카르 인도 가격",
-    calcTitle: "다카르 인도 가격",
+    calcTitle: "도착원가와 계약금",
     calcTier: "차량 유형",
-    calcDeposit: "계약금 30%: {n}",
+    calcCif: "CIF 다카르",
+    calcCustoms: "관세",
+    calcLanded: "추정 도착원가",
+    calcDeposit: "계약금 30%",
     tierCity: "소형/세단 (아반떼, K5)",
     tierSuvc: "컴팩트 SUV (투싼, 스포티지)",
     tierSuvl: "SUV (싼타페, 쏘렌토)",
@@ -885,23 +897,20 @@ function currentTier() {
   return TIERS.find((x) => x.id === id) || TIERS[1];
 }
 function updateCalc() {
+  const cifEl = document.getElementById("calcCif");
+  const cusEl = document.getElementById("calcCustoms");
   const landedEl = document.getElementById("calcLanded");
   const depEl = document.getElementById("calcDeposit");
-  const wa = document.getElementById("calcWa");
-  if (!landedEl || !depEl || !wa) return;
+  if (!cifEl || !cusEl || !landedEl || !depEl) return;
   const tier = currentTier();
-  const landed = tier.priceXof;
-  const dep = Math.round(landed * 0.30);
+  const cifXof = tier.cifUsd * FX.USD_XOF;
+  const customs = cifXof * CUSTOMS_RATE;
+  const landed = cifXof + customs;
+  const deposit = landed * DEPOSIT_RATE;
+  cifEl.textContent = money(cifXof);
+  cusEl.textContent = money(customs);
   landedEl.textContent = money(landed);
-  depEl.textContent = t("calcDeposit").replace("{n}", money(dep));
-  const label = tierLabel(tier.id);
-  const price = fcfaPlain(landed);
-  const msg = lang === "ko"
-    ? "안녕하세요 Boylo Trading, " + label + " 차량의 다카르 인도 가격 " + price + "에 관심이 있습니다. 아직 가능한지요?"
-    : lang === "en"
-    ? "Hello Boylo Trading, I am interested in a " + label + " at " + price + " turn-key Dakar. Is it still available?"
-    : "Bonjour Boylo Trading, je suis intéressé par un " + label + " à " + price + " clé en main Dakar. Est-il toujours disponible ?";
-  wa.href = waLink(msg);
+  depEl.textContent = money(deposit);
 }
 function renderStock(withSkeleton) {
   const grid = document.getElementById("stockGrid");
